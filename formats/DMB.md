@@ -44,11 +44,15 @@ The DMB file format, for the grand total of 3 plain ASCII lines it has, uses Uni
 
 The DMB file format starts with an optional "shebang line" ("#!") for Unix executable interpreter business.
 
-A value which we'll call the "base pointer/key" (which is presumably used so that file-position-based encryption doesn't royally fail for shebang interpreter changes) is set to the file position at this point.
-
-This is a 32-bit value that gets downcast as necessary.
+When a specific set of executor options are *not* being forced, it's (likely?) possible to write arbitrary comment lines.
+For perfect read logic, read lines at the start of the file until you find one without "#", then backtrack a character.
+Record all of this and consider it a blob of data that you have absolutely no reason to care about whatsoever (because that's what it is).
 
 It follows (or starts) with a line of the form `world bin v512\n` (at time of writing).
+
+A value which we'll call the "base pointer/key" (which is presumably used so that file-position-based encryption doesn't royally fail for shebang interpreter changes) is set to the file position of the start of this line (the 'w').
+
+This is a 32-bit value that gets downcast as necessary.
 
 This version is the GEN Version.
 
