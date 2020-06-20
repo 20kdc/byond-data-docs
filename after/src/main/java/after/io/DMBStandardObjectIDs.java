@@ -34,7 +34,7 @@ public class DMBStandardObjectIDs {
 	public short unkD;
 	// --
 	public byte unkE;
-	// GEN >= 320
+	// GEN >= 230
 	public int idC = OBJ_NULL;
 	// --
 	// GEN >= 507

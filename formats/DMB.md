@@ -57,6 +57,7 @@ This is a 32-bit value that gets downcast as necessary.
 This version is the GEN Version.
 
 If it's below 222, information is not available on these versions at this time.
+There's also some problem in this document or the current implementation of it regarding versions below 230.
 
 Known versions always follow with one of two line types:
 

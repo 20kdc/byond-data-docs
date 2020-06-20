@@ -12,8 +12,10 @@ public class DMBHeader {
 	// These are converted in Latin-1 style for lack of any better ideas
 	public String shebang = null;
 
-	public int vGEN = 512, vLHS = 512, vRHS = 512;
-	public int flags = 832;
+	private static int DEFAULT_VERSION = 230;
+	
+	public int vGEN = DEFAULT_VERSION, vLHS = DEFAULT_VERSION, vRHS = DEFAULT_VERSION;
+	public int flags = 0;
 	public int exFlags;
 
 	public void read(DMBReadContext rc) {
