@@ -116,17 +116,20 @@ This starts with an ObjectID, which is the amount of entries.
 
 Each class has:
 
-1. StringID name
-2. Nullable ClassID parent
-3. Nullable StringID nameLastFragment
-4. ObjectID unk
+1. StringID name (this is the actual name, the value of 'type')
+2. Nullable ClassID parentType (this is the value of 'parent_type')
+3. Nullable StringID objName (this is the value of 'name'. IFL)
+4. Nullable StringID description (this is the value of 'description'. IFL)
 5. Nullable CacheFileID icon (the 'icon' property)
 6. Nullable StringID iconState (the 'icon_state' property)
-7. Uint8 unk
+7. Uint8 direction (the 'direction' property)
 
-For GEN Versions >= 307, additionally,
- another Uint8. If it's 0x0F (*not* 0xFF!), then a Uint32 follows to replace it. Unknown.
-If the format version is insufficient, this defaults to 1.
+For GEN Versions >= 307, additionally {
+ 1. Uint8 dmSpecialType. (unknown exact meaning, IFL)
+ 2. If it's 0x0F (*not* 0xFF!), then a Uint32 follows to replace it.
+ If the format version is insufficient, this defaults to 1.
+ To preserve the original file, it's important to preserve the 'long-ness' status separately.
+}
 
 1. StringID text (the 'text' property, might be nullable)
 
@@ -145,11 +148,12 @@ For RHS Versions >= 508, additionally {
 
 }
 
-1. ObjectID unk
-2. (For GEN Versions >= 306, a Uint32, otherwise a Uint8) unk
+1. Nullable StringID suffix (the 'suffix' property, IFL)
+2. (For GEN Versions >= 306, a Uint32, otherwise a Uint8) flags (not sure what they are though, IFL)
 3. Nullable ListID verbList (ID of a list of ProcIDs: verbs)
 4. Nullable ListID procList (ID of a list of ProcIDs: procs)
-5. Array of 2 ObjectIDs unk
+5. Nullable ProcID initializer (initializes an awful lot of stuff. IFL)
+6. Nullable ListID initializedVarsList (same format as the Overriding Vars List, so see that subsection. IFL)
 6. Nullable ListID definingVarList (see relevant subsection)
 
 For GEN Versions >= 267, additionally {
@@ -222,13 +226,15 @@ For each entry:
 
 1. ClassID clazz
 2. Nullable ObjectID key (as in `key = "PlayerName"`)
-3. Uint8 hasFancyStuff
+3. Uint8 sightFlags (IFL)
+ According to Lego, if this doesn't have 0x80, see\_in\_dark is 2, see\_invisible is based on flag 0x02, and sight\_flags is really 0.
+ For reproducibility purposes it's useful to keep these as separate entities.
 
-If hasFancyStuff is >= 0x80:
+If sightFlags is >= 0x80:
 
-1. Uint32 unk
-2. Uint8 unk
-3. Uint8 unk
+1. Uint32 sightFlagsEx (IFL)
+2. Uint8 seeInDark (IFL)
+3. Uint8 seeInvisible (IFL)
 
 ## Sub-Block 3 (The String Table)
 
