@@ -1,0 +1,11 @@
+*.jar
+*.class
+*.zip
+after/*.iml
+after/.idea
+after/.classpath
+after/.project
+after/.settings
+after/.gradle
+after/build
+after/external/test-subjects
