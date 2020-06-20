@@ -38,8 +38,8 @@ public class EdenTest {
 		int lVC = dmb.lists.add(new int[] {0x33, 0xFFCE, 0x60, 0x06, dmb.strings.of(">:D"), 0x03, 0});
 		
 		DMBProcTable.Entry testProc = new DMBProcTable.Entry();
-		testProc.displayName = dmb.strings.of("boop");
-		testProc.name = dmb.strings.of("/client/verb/boop");
+		testProc.name = dmb.strings.of("boop");
+		testProc.path = dmb.strings.of("/client/verb/boop");
 		testProc.verbCategory = dmb.strings.of("boop");
 		testProc.unkC = 0;
 		testProc.code = lVC;

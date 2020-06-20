@@ -340,11 +340,12 @@ For each entry:
 
 For GEN Versions >= 224 OR if large object IDs are on {
 
-1. Nullable StringID name (Full path)
+1. Nullable StringID path (Full path)
+  NOTE: No, this isn't used for inheritance. See below.
 
 }
 
-1. Nullable StringID displayName (the term 'displayName' here is particularly important for verbs)
+1. Nullable StringID name (This is the display name for verbs, but *it is also used for inheritance*.)
 2. Nullable ObjectID unk
 3. Nullable StringID verbCategory (NOTE: Verbs with a null category don't show up in the menu.)
 4. Uint8 unk (usually 0xFF)
@@ -586,5 +587,8 @@ mob types:
  /mob
 ```
 
-The minimum may in fact be smaller than this.
+Some notes:
+
+1. The minimum may in fact be smaller than this.
+2. Even if the names are changed it still seems to work, which indicates to me that at least some associations are by-ID.
 

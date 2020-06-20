@@ -17,10 +17,10 @@ public class DMBProcTable extends DMBObjectEntryBasedSubblock<DMBProcTable.Entry
 	public static class Entry implements DMBObjectEntryBasedSubblock.Entry {
 		// GEN >= 224 | LO
 		@StringID // Nullable
-		public int name = OBJ_NULL;
+		public int path = OBJ_NULL;
 		// --
 		@StringID // Nullable
-		public int displayName = OBJ_NULL;
+		public int name = OBJ_NULL;
 		public int idBAA = OBJ_NULL;
 		@StringID // Nullable
 		public int verbCategory = OBJ_NULL;
@@ -40,8 +40,8 @@ public class DMBProcTable extends DMBObjectEntryBasedSubblock<DMBProcTable.Entry
 		@Override
 		public void read(DMBReadContext rc) {
 			if (rc.vGEN >= 224 || rc.largeObjectIDs)
-				name = rc.id();
-			displayName = rc.id();
+				path = rc.id();
+			name = rc.id();
 			idBAA = rc.id();
 			verbCategory = rc.id();
 			unkA = rc.io.get();
@@ -59,8 +59,8 @@ public class DMBProcTable extends DMBObjectEntryBasedSubblock<DMBProcTable.Entry
 		@Override
 		public void write(DMBWriteContext wc) {
 			if (wc.vGEN >= 224 || wc.largeObjectIDs)
-				wc.id(name);
-			wc.id(displayName);
+				wc.id(path);
+			wc.id(name);
 			wc.id(idBAA);
 			wc.id(verbCategory);
 			wc.i8(unkA);
