@@ -22,28 +22,28 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 		@StringID
 		public int name;
 		@ClassID // Nullable
-		public int parent;
+		public int parent = OBJ_NULL;
 		@StringID // Nullable
-		public int objName;
+		public int objName = OBJ_NULL;
 		@StringID // Nullable
-		public int description;
+		public int description = OBJ_NULL;
 		@CacheFileID // Nullable
-		public int icon;
+		public int icon = OBJ_NULL;
 		@StringID // Nullable
-		public int iconState;
+		public int iconState = OBJ_NULL;
 		
 		// need to figure this out too
-		public byte direction;
+		public byte direction = 2;
 		
 		// >= 307
 		
 		public boolean dmSpecialTypeLong;
-		public int dmSpecialType;
+		public int dmSpecialType = 1;
 		
 		// --
 		
 		@StringID // maybe nullable
-		public int text;
+		public int text = OBJ_NULL;
 		
 		// >= 494
 		
@@ -59,19 +59,19 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 		// --
 		
 		@StringID // Nullable
-		public int suffix;
+		public int suffix = OBJ_NULL;
 		// need to figure this out
 		public int flags;
 		@ListOfProcID // Nullable (not the elements)
-		public int verbTable;
+		public int verbTable = OBJ_NULL;
 		@ListOfProcID // Nullable (not the elements)
-		public int procTable;
+		public int procTable = OBJ_NULL;
 		@ProcID // Nullable
-		public int initializer;
-		@ListID
-		public int initializedVarsTable;
+		public int initializer = OBJ_NULL;
+		@ListID // Marked Nullable because honestly it probably is, but unsure
+		public int initializedVarsTable = OBJ_NULL;
 		@ListID // Nullable, (complex key/value pairs thing, see docs)
-		public int varTable;
+		public int varTable = OBJ_NULL;
 		
 		// >= 267
 		
@@ -90,7 +90,7 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 		// >= 306
 		
 		@ListID // Nullable, complex key/value pairs thing
-		public int overridingVarList;
+		public int overridingVarList = OBJ_NULL;
 		
 		@Override
 		public void read(DMBReadContext rc) {

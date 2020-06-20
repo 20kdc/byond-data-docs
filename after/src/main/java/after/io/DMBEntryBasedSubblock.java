@@ -39,6 +39,12 @@ public abstract class DMBEntryBasedSubblock<X> {
 			writeEntry(wc, entry);
 	}
 	
+	public int add(X value) {
+		int res = entries.size();
+		entries.add(value);
+		return res;
+	}
+	
 	public abstract X readEntry(DMBReadContext rc);
 	public abstract void writeEntry(DMBWriteContext wc, X entry);
 }

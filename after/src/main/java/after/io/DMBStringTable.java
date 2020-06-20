@@ -113,4 +113,32 @@ public class DMBStringTable extends DMBEntryBasedSubblock<byte[]> {
 	public void setString(int i, String val) {
 		entries.set(i, val.getBytes(StandardCharsets.ISO_8859_1));
 	}
+	
+	/**
+	 * Gets a string ID by content or makes one.
+	 * Expects the content to be a new byte array that doesn't get modified.
+	 */
+	public int of(byte[] val) {
+		int idx = 0;
+		for (byte[] ent : entries) {
+			if (val.length == ent.length) {
+				int i;
+				for (i = 0; i < val.length; i++)
+					if (val[i] != ent[i])
+						break;
+				if (i == val.length)
+					return idx;
+			}
+			idx++;
+		}
+		entries.add(val);
+		return idx;
+	}
+
+	/**
+	 * Gets a string ID by content or makes one.
+	 */
+	public int of(String val) {
+		return of(val.getBytes(StandardCharsets.ISO_8859_1));
+	}
 }

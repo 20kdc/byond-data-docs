@@ -13,7 +13,7 @@ public class DMBHeader {
 	public String shebang = null;
 
 	public int vGEN = 512, vLHS = 512, vRHS = 512;
-	public int flags;
+	public int flags = 832;
 	public int exFlags;
 
 	public void read(DMBReadContext rc) {
@@ -53,6 +53,7 @@ public class DMBHeader {
 		}
 		
 		flags = rc.io.getInt();
+		exFlags = 0;
 		if ((flags & 0x80000000) != 0)
 			exFlags = rc.io.getInt();
 

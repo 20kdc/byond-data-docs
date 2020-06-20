@@ -75,6 +75,8 @@ A UInt32 follows. This is a set of game flags.
 Bit 31 (highest): Another UInt32 follows. (Unsure on meaning.)
 Bit 30: LARGE OBJECT IDs
 
+There's also a bunch of unknown stuff. (Seems to default to 832, but this isn't necessary)
+
 It's important to note that ObjectID is Uint16 normally and Uint32 if LARGE OBJECT IDs is set.
 
 For analysis reasons, it's important to note that LARGE OBJECT IDs did not exist until at *least* after v368.
@@ -122,13 +124,33 @@ Each class has:
 4. Nullable StringID description (this is the value of 'description'. IFL)
 5. Nullable CacheFileID icon (the 'icon' property)
 6. Nullable StringID iconState (the 'icon_state' property)
-7. Uint8 direction (the 'direction' property)
+7. Uint8 direction (the 'direction' property - 2 is a good default)
 
 For GEN Versions >= 307, additionally {
- 1. Uint8 dmSpecialType. (unknown exact meaning, IFL)
- 2. If it's 0x0F (*not* 0xFF!), then a Uint32 follows to replace it.
- If the format version is insufficient, this defaults to 1.
- To preserve the original file, it's important to preserve the 'long-ness' status separately.
+
+1. Uint8 dmSpecialType.
+2. If it's 0x0F (*not* 0xFF!), then a Uint32 follows to replace it.
+
+If the format version is insufficient, this defaults to 1.
+To preserve the original file, it's important to preserve the 'long-ness' status separately.
+Also note that the default-to-1 behavior is generally a good idea even outside
+format version shenanigans.
+
+Values for dmSpecialType are:
+
+```
+(pretty much anything not shown here, including client) = 1
+/image              = 0x0041
+/sound              = 0x0221
+/icon               = 0x0301
+/matrix             = 0x0401
+/database[/query]   = 0x1001
+/regex              = 0x2001
+/mutable_appearance = 0x4041
+```
+
+This suggests a bitfield. I haven't yet found a case where the lowest bit is off.
+
 }
 
 1. StringID text (the 'text' property, might be nullable)
@@ -136,8 +158,8 @@ For GEN Versions >= 307, additionally {
 For RHS Versions >= 494, additionally {
 
 1. ObjectID unk
-2. Uint16 unk
-3. Uint16 unk
+2. Uint16 unk (note: my pet theory is, this involves either step or icon size)
+3. Uint16 unk (same)
 
 }
 
@@ -322,14 +344,15 @@ For GEN Versions >= 224 OR if large object IDs are on {
 }
 
 1. Nullable StringID displayName (the term 'displayName' here is particularly important for verbs)
-2. Array of 2 ObjectIDs unk
-3. Uint8 unk
-4. Uint8 unk
-5. Uint8 x
-6. If x has the high bit set, Uint32 unk, Uint8 unk.
-7. ListID code (See (Bytecode)[./DMB.Bytecode.md] for further information)
-8. ListID of VarID locals
-9. ListID args (but it's complicated - VarIDs are involved, but also other stuff)
+2. Nullable ObjectID unk
+3. Nullable StringID verbCategory (NOTE: Verbs with a null category don't show up in the menu.)
+4. Uint8 unk (usually 0xFF)
+5. Uint8 unk (usually 0)
+6. Uint8 x (Seems to be flags - setting to 0 causes the verb menu to appear, while setting to 5 causes it to disappear.)
+7. If x has the high bit set, Uint32 unk, Uint8 unk.
+8. ListID code (See (Bytecode)[./DMB.Bytecode.md] for further information)
+9. ListID of VarID locals (note that this isn't nullable)
+10. ListID args (note that this isn't nullable) (it's also complicated - VarIDs are involved, but also other stuff)
 
 ## Sub-Block 6 (The Var Table)
 
@@ -367,7 +390,7 @@ Like Sub-Block 1, this starts with an ObjectID entry count.
 
 For each entry:
 
-1. Uint8 unk
+1. Uint8 baseType
 2. ClassID-as-Uint32 clazz (the actual class)
 3. Nullable ProcID initializer (used to set per-instance properties)
 
@@ -376,6 +399,16 @@ A turf has the values (10, (some class ID), 0xFFFF).
 It is important to note that as far as I am aware, most properties of an initializer proc don't matter.
 
 Check the DMB.Bytecode.md file for more information.
+
+As for base types, they're assigned based on the type hierarchy in some way:
+
+```
+BT_DATUM = 8
+BT_ATOM_MOVABLE = 9
+BT_ATOM = 10
+BT_AREA = 11
+BT_IMAGE = 63
+```
 
 ## Sub-Block 9 (Map Additional Data)
 
@@ -409,7 +442,7 @@ If GEN Version < 368 (YES, UNDER) {
 
 }
 
-1. Uint32 unk
+1. Uint32 unk (Seems to default to 100, but isn't necessary)
 2. ClassID client
 
 If GEN Version >= 308 {
@@ -419,7 +452,7 @@ If GEN Version >= 308 {
 }
 
 1. Uint8 unk
-2. Uint8 unk (yes, another)
+2. Uint8 unk (Seems to default to 1, but isn't necessary)
 
 If GEN Version >= 415 {
 
@@ -450,7 +483,7 @@ If GEN Version < 507 (yes, under) {
 
 If GEN Version >= 232 {
 
-1. Uint16 unk
+1. Uint16 unk (Seems to default to 2827, but isn't necessary)
 
 }
 
@@ -481,8 +514,8 @@ If GEN Version >= 266 {
 
 If GEN Version >= 272 {
 
-1. Uint16 unk
-2. Array of 2 ObjectIDs unk
+1. Uint16 unk (best set to 30)
+2. Array of 2 Nullable ObjectIDs unk
 
 }
 
@@ -494,7 +527,7 @@ If GEN Version >= 276 {
 
 If GEN Version >= 305 {
 
-1. ObjectID unk
+1. ObjectID unk (seems to be the string "default"?)
 
 }
 
@@ -524,3 +557,33 @@ For each entry:
 These correspond to entries in the relevant RSC files.
 
 (The order is swapped. This is known and correct.)
+
+## The Requirements For A DMB File To Be Loadable (Eden)
+
+For v512 at least, the following appears to be the relative minimum to load the DMB file.
+
+```
+start with adding a blank string at 0 just in case that's relied upon
+
+classes:
+ /datum
+ /image
+  parent_type = /datum
+ /atom
+  parent_type = /datum
+ /turf
+  parent_type = /atom
+ /area
+  parent_type = /atom
+ /atom/movable
+  parent_type = /atom
+ /mob
+  parent_type = /atom/movable
+ /client
+
+mob types:
+ /mob
+```
+
+The minimum may in fact be smaller than this.
+

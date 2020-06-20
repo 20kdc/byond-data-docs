@@ -14,23 +14,30 @@ public class DMBInstanceTable extends DMBObjectEntryBasedSubblock<DMBInstanceTab
 	}
 
 	public static class Entry implements DMBObjectEntryBasedSubblock.Entry {
-		public byte unkA;
+		public static final byte BT_DATUM = 8;
+		public static final byte BT_ATOM_MOVABLE = 9;
+		public static final byte BT_ATOM = 10;
+		public static final byte BT_AREA = 11;
+		public static final byte BT_IMAGE = 63;
+		
+		// This is the base type
+		public byte baseType = BT_DATUM;
 		// ClassID, but not written as an ID
 		@ClassID
-		public int clazz;
+		public int clazz = OBJ_NULL; // even though this isn't nullable, default it to OBJ_NULL for debug reasons
 		@ProcID // Nullable
-		public int initializer;
+		public int initializer = OBJ_NULL;
 		
 		@Override
 		public void read(DMBReadContext rc) {
-			unkA = rc.io.get();
+			baseType = rc.io.get();
 			clazz = rc.io.getInt();
 			initializer = rc.id();
 		}
 		
 		@Override
 		public void write(DMBWriteContext wc) {
-			wc.i8(unkA);
+			wc.i8(baseType);
 			wc.i32(clazz);
 			wc.id(initializer);
 		}

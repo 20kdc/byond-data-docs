@@ -5,69 +5,70 @@ import after.annotations.MobTypeID;
 import after.annotations.StringID;
 import after.io.framework.DMBReadContext;
 import after.io.framework.DMBWriteContext;
+import static after.io.DMBObjectEntryBasedSubblock.OBJ_NULL;
 
 public class DMBStandardObjectIDs {
 	@MobTypeID // Nullable
-	public int mob;
+	public int mob = OBJ_NULL;
 	// Nullable ClassID
 	@ClassID // Nullable
-	public int turf;
+	public int turf = OBJ_NULL;
 	@ClassID // Nullable
-	public int area;
-	public int[] idBA = new int[3];
+	public int area = OBJ_NULL;
+	public int[] idBA = new int[] {OBJ_NULL, OBJ_NULL, OBJ_NULL};
 	@StringID
-	public int name;
+	public int name = OBJ_NULL;
 	// GEN < 368 (yes, under)
-	public int idOld1;
+	public int idOld1 = OBJ_NULL;
 	// --
-	public int unkA;
+	public int unkA = 100;
 	@ClassID
-	public int client;
+	public int client = OBJ_NULL;
 	// GEN >= 308
 	@ClassID
-	public int image;
+	public int image = OBJ_NULL;
 	// --	
 	public byte unkB;
-	public byte unkC;
+	public byte unkC = 1;
 	// GEN >= 415
 	public short unkD;
 	// --
 	public byte unkE;
 	// GEN >= 320
-	public int idC;
+	public int idC = OBJ_NULL;
 	// --
 	// GEN >= 507
 	public int[] idEvenMore = new int[0];
 	// GEN < 507 (yes, under)
-	public int idX;
+	public int idX = OBJ_NULL;
 	// GEN >= 232
-	public short unkF;
+	public short unkF = 2827;
 	// GEN >= 235 && GEN < 368
 	public short unkPX;
 	// GEN >= 236 && GEN < 368
 	public short unkPY;
 	// GEN >= 341
 	@StringID // Nullable
-	public int hubPasswordHashed;
+	public int hubPasswordHashed = OBJ_NULL;
 	// GEN >= 266
-	@StringID
-	public int serverName;
+	@StringID // Nullable
+	public int serverName = OBJ_NULL;
 	public int[] unkBG = new int[2];
 	// GEN >= 272
-	public short unkG;
-	public int[] idAY = new int[2];
+	public short unkG = 30;
+	public int[] idAY = new int[] {OBJ_NULL, OBJ_NULL};
 	// GEN >= 276
 	@StringID // Nullable
-	public int hub;
+	public int hub = OBJ_NULL;
 	// GEN >= 305
-	public int idAZA;
+	public int idAZA = OBJ_NULL;
 	// GEN >= 360
-	public int idAZB;
+	public int idAZB = OBJ_NULL;
 	
 	// LHS >= 455
-	public short iconSizeX;
-	public short iconSizeY;
-	public short unkZ;
+	public short iconSizeX = 32;
+	public short iconSizeY = 32;
+	public short unkZ = (short) 32768;
 	
 	public void read(DMBReadContext rc) {
 		mob = rc.id();

@@ -12,7 +12,7 @@ import after.io.framework.DMBWriteContext;
  * This represents the '3D' map.
  */
 public class DMBGrid {
-	public int xSize = 1, ySize = 1, zSize = 1;
+	public int xSize = 0, ySize = 0, zSize = 0;
 	// Array of nullable (0xFFFF) InstanceIDs
 	@ElementMarkers({InstanceID.class})
 	@NonNull
