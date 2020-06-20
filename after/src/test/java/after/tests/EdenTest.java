@@ -24,12 +24,8 @@ public class EdenTest {
 		put(dmb, "eden.dmb");
 		// ---
 		
-		dmb.standardObjectIDs.idAZA = dmb.strings.of("default");
-		
 		// verb table
 		int lVT = dmb.lists.add(new int[] {0});
-		// empty
-		int lEmpty = dmb.lists.add(new int[0]);
 		// verb code
 		// GETVAR src
 		// PUSHVAL ">:D"
@@ -38,13 +34,9 @@ public class EdenTest {
 		int lVC = dmb.lists.add(new int[] {0x33, 0xFFCE, 0x60, 0x06, dmb.strings.of(">:D"), 0x03, 0});
 		
 		DMBProcTable.Entry testProc = new DMBProcTable.Entry();
-		testProc.name = dmb.strings.of("boop");
-		testProc.path = dmb.strings.of("/client/verb/boop");
-		testProc.verbCategory = dmb.strings.of("boop");
-		testProc.unkC = 0;
+		testProc.name = dmb.strings.of(">:D");
+		testProc.verbCategory = dmb.strings.of(">:D");
 		testProc.code = lVC;
-		testProc.args = lEmpty;
-		testProc.locals = lEmpty;
 		dmb.procs.add(testProc);
 		
 		dmb.classes.entries.get(dmb.standardObjectIDs.client).verbTable = lVT;

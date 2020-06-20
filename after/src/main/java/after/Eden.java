@@ -30,14 +30,8 @@ public class Eden {
 		// I suspect this is relied upon, don't want to jinx it
 		dmb.strings.entries.add(new byte[0]);
 
-		int datum = addClass(dmb, "/datum", OBJ_NULL);
-		int atom = addClass(dmb, "/atom", datum);
-		int atomMovable = addClass(dmb, "/atom/movable", atom);
-		int mob = addClass(dmb, "/mob", atomMovable);
-		dmb.standardObjectIDs.image = addClass(dmb, "/image", datum);
-		dmb.standardObjectIDs.turf = addClass(dmb, "/turf", atom);
-		dmb.standardObjectIDs.area = addClass(dmb, "/area", atom);
-		dmb.standardObjectIDs.client = addClass(dmb, "/client", OBJ_NULL);
+		int mob = addClass(dmb, "", OBJ_NULL);
+		dmb.standardObjectIDs.client = mob;
 
 		DMBMobTypeTable.Entry mobType = new DMBMobTypeTable.Entry();
 		mobType.clazz = mob;
