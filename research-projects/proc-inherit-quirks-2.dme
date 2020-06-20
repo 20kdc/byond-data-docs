@@ -1,0 +1,18 @@
+// Proc Inheritance Quirks 2
+//  Since proc calls work in the exact same way as verb calls,
+//   proc calls are based on a list of procs, and the parent proc is
+//   whichever version of that proc precedes it.
+
+/datum
+	proc/test1()
+		set name = "test"
+		world << "To pass, this should be printed first."
+	proc/test2()
+		set name = "test"
+		..()
+		world << "To pass, this should be printed second."
+
+/mob
+	verb/test()
+		test1()
+

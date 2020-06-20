@@ -1,0 +1,13 @@
+"a" = (/turf/white_tile,/area)
+"b" = (/turf/black_tile,/area)
+(1, 1, 1) = {"
+abababab
+babababa
+abababab
+babababa
+abababab
+babababa
+abababab
+babababa
+"}
+

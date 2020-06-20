@@ -1,0 +1,23 @@
+// Proc Inheritance Quirks 3
+//  While ".procs" doesn't exist, ".verbs" does exist, and can prove several points:
+//   1. That verbs are the same type as procs - adding a proc to verbs works just fine
+//   2. That the verbs list acts the same way as demonstrated with procs.
+//  (Note that an attempt to directly call a proc will make it a proc call, using proc parenthood.)
+
+/datum
+	verb/test1()
+		set name = "testB"
+		world << "To pass, this should be printed first, and test2 should be run if and only if testA was run."
+		world << "Furthermore, pressing testA multiple times must have no further effect than it being pressed once."
+
+/datum/holding_cell
+	proc/test2()
+		set name = "testB"
+		..()
+		world << "This is test2 after the parent call."
+
+/mob
+	verb/testA()
+		world << "This is testA adding the test2 verb."
+		src.verbs += /datum/holding_cell/proc/test2
+

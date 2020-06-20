@@ -30,23 +30,22 @@ public class DMBVarTable extends DMBObjectEntryBasedSubblock<DMBVarTable.Entry> 
 	}
 	
 	public static class Entry implements DMBObjectEntryBasedSubblock.Entry {
-		public byte type;
-		// remember: Float.intRawBitsToFloat()
-		public int value;
+		public DMBValue value = DMBValue.NULL_VALUE;
 		@StringID
 		public int name;
 		
 		@Override
 		public void read(DMBReadContext rc) {
-			type = rc.io.get();
-			value = rc.io.getInt();
+			int t = rc.io.get();
+			int v = rc.io.getInt();
+			value = new DMBValue(t, v);
 			name = rc.id();
 		}
 		
 		@Override
 		public void write(DMBWriteContext wc) {
-			wc.i8(type);
-			wc.i32(value);
+			wc.i8(value.type);
+			wc.i32(value.value);
 			wc.id(name);
 		}
 	}

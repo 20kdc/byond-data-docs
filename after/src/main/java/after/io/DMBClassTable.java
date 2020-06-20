@@ -19,6 +19,10 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 	}
 	
 	public static class Entry implements DMBObjectEntryBasedSubblock.Entry {
+		public static final int CF_MOB = 2;
+		public static final int CF_ATOM = 4;
+		public static final int CF_AREA = 8;
+		
 		@StringID
 		public int name;
 		@ClassID // Nullable
@@ -60,7 +64,7 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 		
 		@StringID // Nullable
 		public int suffix = OBJ_NULL;
-		// need to figure this out
+		// see CF_* constants
 		public int flags;
 		@ListOfProcID // Nullable (not the elements)
 		public int verbTable = OBJ_NULL;

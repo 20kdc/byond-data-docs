@@ -4,6 +4,7 @@ import after.io.DMB;
 import after.io.DMBClassTable;
 import after.io.DMBInstanceTable;
 import after.io.DMBMobTypeTable;
+import after.io.DMBValue;
 
 import static after.io.DMBObjectEntryBasedSubblock.OBJ_NULL;
 
@@ -22,13 +23,6 @@ public class Eden {
 	
 	private static DMBClassTable.Entry cls(DMB dmb, int id) {
 		return dmb.classes.entries.get(id);
-	}
-	
-	private static void addInstance(DMB dmb, int clz, int unk) {
-		DMBInstanceTable.Entry ent = new DMBInstanceTable.Entry();
-		ent.baseType = (byte) unk;
-		ent.clazz = clz;
-		dmb.instances.add(ent);
 	}
 	
 	public static DMB newEden() {

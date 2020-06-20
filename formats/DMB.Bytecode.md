@@ -4,11 +4,25 @@ Sorry, I don't actually have any documentation on this yet.
 
 However, MCHSL & SpaceManiac's project, extools, is known to contain a disassembler for this.
 
+## PUSHVAL
+
+PUSHVAL's argument is the usual (TypeValue)[./DMB.TypeValue.md] pair.
+
+However, due to the 16-bit nature of lists (normally), there's a slight modification to the encoding.
+
+For floats (type 42), and SPECIFICALLY floats, they have 2 value entries rather than 1.
+These are laid out large word first (big-endian), even though the individual list byte pairs remain little-endian.
+So the actual on-disk byte order, with 0 being MSB, is 1032.
+
+The way you will actually receive it after your (assumed) list reader abstraction, it'll just be the high word followed by the low word.
+
+I don't know what the form is when large object IDs are enabled, but assume it's unchanged.
+
 ## Possible Extools Errata
 
-1. CALLNR (2A) is really more like another form of GETVAR.
-2. C8 opcode; appears to have 1 arg
-3. 18 opcode; appears to be similar to "<<" ; uses 6 stack slots, *might* return something
+1. CALLNR (0x2A) is really more like another form of GETVAR.
+2. 0xC8 opcode; appears to have 1 arg
+3. 0x18 opcode; appears to be similar to "<<" ; uses 6 stack slots, *might* return something
 4. Access modifier 0xFFCD (65485) is actually "usr"
 5. `SRC_PROC_SPEC` access modifier has the important bits commented out, breaking everything
 6. SUBVAR right-hand-side parsing is completely wrong - the SUBVAR is just two accesses concatenated.

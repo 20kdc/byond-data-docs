@@ -9,3 +9,9 @@ after/.settings
 after/.gradle
 after/build
 after/external/test-subjects
+
+# these contain BYOND stdlib stuff
+research-projects/*.dmb
+research-projects/*.lk
+research-projects/*.int
+

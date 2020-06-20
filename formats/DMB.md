@@ -129,28 +129,13 @@ Each class has:
 
 For GEN Versions >= 307, additionally {
 
-1. Uint8 dmSpecialType.
+1. Uint8 dmSpecialType (See: The Annotated Standard Class Hierarchy. IFL).
 2. If it's 0x0F (*not* 0xFF!), then a Uint32 follows to replace it.
 
 If the format version is insufficient, this defaults to 1.
 To preserve the original file, it's important to preserve the 'long-ness' status separately.
 Also note that the default-to-1 behavior is generally a good idea even outside
 format version shenanigans.
-
-Values for dmSpecialType are:
-
-```
-(pretty much anything not shown here, including client) = 1
-/image              = 0x0041
-/sound              = 0x0221
-/icon               = 0x0301
-/matrix             = 0x0401
-/database[/query]   = 0x1001
-/regex              = 0x2001
-/mutable_appearance = 0x4041
-```
-
-This suggests a bitfield. I haven't yet found a case where the lowest bit is off.
 
 }
 
@@ -172,7 +157,7 @@ For RHS Versions >= 508, additionally {
 }
 
 1. Nullable StringID suffix (the 'suffix' property, IFL)
-2. (For GEN Versions >= 306, a Uint32, otherwise a Uint8) flags (not sure what they are though, IFL)
+2. (For GEN Versions >= 306, a Uint32, otherwise a Uint8) flags (check The Annotated Standard Class Hierarchy. IFL)
 3. Nullable ListID verbList (ID of a list of ProcIDs: verbs)
 4. Nullable ListID procList (ID of a list of ProcIDs: procs)
 5. Nullable ProcID initializer (initializes an awful lot of stuff. IFL)
@@ -232,12 +217,6 @@ Details on what happens for large-object-IDs ARE NOT CERTAIN.
 But specifically for 16-bit object IDs and float values, the value is written in two pieces, 'semi-big-endian'.
 
 So `225, 42, 16896, 0` means `[string 225] = float 32.0`.
-
-### A Minor Warning
-
-It's important to note that some classes are actually BYOND built-in types.
-
-Additionally, some class code is part of BYOND and is always generated for every file.
 
 ## Sub-Block 2 (The Mob Type Table)
 
@@ -366,13 +345,9 @@ For each entry {
 2. Uint32 value
 3. StringID name
 
+For further information on the type/value part, see (TypeValue)[./DMB.TypeValue.md].
+
 }
-
-Type is a BYOND type number (this type numbering is shared with the protocol). Of these, at least the following are valid:
-
-- 0 (null, value ignored)
-- 6 (string, as StringID)
-- 42 (float, value should be transmuted from int to float)
 
 If the GEN Version *and* the LHS Version are both >= 512, this has a footer {
 
@@ -392,25 +367,18 @@ Like Sub-Block 1, this starts with an ObjectID entry count.
 
 For each entry:
 
-1. Uint8 baseType
-2. ClassID-as-Uint32 clazz (the actual class)
+1. Uint8 type
+2. Uint32 value
 3. Nullable ProcID initializer (used to set per-instance properties)
+
+For further information on the type/value part, see (TypeValue)[./DMB.TypeValue.md].
+But to be particular, this represents a 
 
 A turf has the values (10, (some class ID), 0xFFFF).
 
 It is important to note that as far as I am aware, most properties of an initializer proc don't matter.
 
 Check the DMB.Bytecode.md file for more information.
-
-As for base types, they're assigned based on the type hierarchy in some way:
-
-```
-BT_DATUM = 8
-BT_ATOM_MOVABLE = 9
-BT_ATOM = 10
-BT_AREA = 11
-BT_IMAGE = 63
-```
 
 ## Sub-Block 9 (Map Additional Data)
 
@@ -562,33 +530,46 @@ These correspond to entries in the relevant RSC files.
 
 ## The Requirements For A DMB File To Be Loadable (Eden)
 
-For v512 at least, the following appears to be the relative minimum to load the DMB file.
+Honestly, I'm not even sure what the minimum is.
+Check the included source at this point, and go down from there.
+
+## The Annotated Standard Class Hierarchy
+
+It's important to note that some classes are actually BYOND built-in types.
+
+Additionally, some class code is part of BYOND and is always generated for every file.
 
 ```
-start with adding a blank string at 0 just in case that's relied upon
+class flags:
+ CF_MOB  = 0x0002
+ CF_ATOM = 0x0004 - Responsible for giving an atom it's properties.
+ CF_AREA = 0x0008
 
-classes:
- /datum
- /image
-  parent_type = /datum
- /atom
-  parent_type = /datum
- /turf
-  parent_type = /atom
- /area
-  parent_type = /atom
- /atom/movable
-  parent_type = /atom
- /mob
-  parent_type = /atom/movable
- /client
+instance base types (these could've been equivalent to general type numbers, but it uses 8 for mobs):
+ some objs are 9 and some are 8
+ BT_MOB = 8
+ BT_ATOM_MOVABLE = 9
+ BT_ATOM = 10
+ BT_AREA = 11
+ BT_IMAGE = 63
 
-mob types:
- /mob
+                        DMST   FLAG  INSTB PARENT
+/client             = 0x0001 0x0000 0
+/datum              = 0x0001 0x0000 0
+/sound              = 0x0221 0x0000 /datum
+/icon               = 0x0301 0x0000 /datum
+/matrix             = 0x0401 0x0000 /datum
+/regex              = 0x2001 0x0000 /datum
+/dm_filter          = 0x0001 0x0000 /datum
+/image              = 0x0041 0x0004 /datum
+/mutable_appearance = 0x4041 0x0004 /image
+/database           = 0x1001 0x0000 /datum
+/database/query     = 0x1001 0x0000 /database
+/atom               = 0x0001 0x0004 /datum
+/turf               = 0x0001 0x0004 /atom
+/area               = 0x0001 0x000C /atom
+/atom/movable       = 0x0001 0x0004 /atom
+/mob                = 0x0001 0x0006 /atom/movable
+/obj                = 0x0001 0x0004 /atom/movable
 ```
-
-Some notes:
-
-1. The minimum may in fact be smaller than this.
-2. Even if the names are changed it still seems to work, which indicates to me that at least some associations are by-ID.
 

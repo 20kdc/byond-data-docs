@@ -1,0 +1,38 @@
+// Random Inheritance
+//  The runtime appears to be not exactly strict about object inheritance.
+//  And the DM compiler isn't exactly strict about it either.
+//  For example, making the client extend /datum is apparently allowed.
+//  As far as I can tell, DM objects completely ignore inheritance
+//   outside of the effects on vars and procs.
+//  The actual details of a class are split between:
+//   1. The class flags
+//   2. The type path used to create an instance of it (dynamically or statically)
+//  Case in point: If you remove /pawn's parent, *nothing will happen.*
+
+/client
+	parent_type = /datum
+
+var/atom/movable/quack = null
+
+/mob
+	parent_type = /datum
+	verb/doTheThing()
+		quack.Move(locate(8, 5, 1))
+
+/atom/movable
+	parent_type = /datum
+
+/atom
+
+/pawn
+	text = "p"
+	parent_type = /atom/movable
+
+/world
+	New()
+		quack = new /pawn(locate(8, 7, 1))
+
+// ---
+
+#include "chessboard.dm"
+

@@ -1,0 +1,18 @@
+// Proc Inheritance Quirks 1
+//  Proc calls work in the exact same way as verb calls.
+//  Proc calls are driven by display name.
+//  So as these procs both have the display name "test",
+//   test2 wins even in a call to test1.
+
+/datum
+	proc/test1()
+		set name = "test"
+		world << "FAIL"
+	proc/test2()
+		set name = "test"
+		world << "PASS"
+
+/mob
+	verb/test()
+		test1()
+
