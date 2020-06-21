@@ -403,8 +403,10 @@ It is reasonable to assume that null instances are used to pad out long empty re
 1. Nullable MobTypeID mob
 2. Nullable ClassID turf
 3. Nullable ClassID area
-4. Array of 3 ObjectIDs unk
-5. StringID name
+4. Nullable ListID of ProcID procs (this contains procs attached to /world)
+5. Nullable ProcID globalVariableInitializer (this contains global variable initializers)
+6. Nullable ObjectID unk
+7. StringID name
 
 If GEN Version < 368 (YES, UNDER) {
 
@@ -542,34 +544,30 @@ Additionally, some class code is part of BYOND and is always generated for every
 ```
 class flags:
  CF_MOB  = 0x0002
- CF_ATOM = 0x0004 - Responsible for giving an atom it's properties.
+ CF_ATOM = 0x0004 Seems to control access to atom procs in some way.
  CF_AREA = 0x0008
 
-instance base types (these could've been equivalent to general type numbers, but it uses 8 for mobs):
- some objs are 9 and some are 8
- BT_MOB = 8
- BT_ATOM_MOVABLE = 9
- BT_ATOM = 10
- BT_AREA = 11
- BT_IMAGE = 63
+'TP' is the type when it shows up in the Instance Table.
 
-                        DMST   FLAG  INSTB PARENT
-/client             = 0x0001 0x0000 0
-/datum              = 0x0001 0x0000 0
-/sound              = 0x0221 0x0000 /datum
-/icon               = 0x0301 0x0000 /datum
-/matrix             = 0x0401 0x0000 /datum
-/regex              = 0x2001 0x0000 /datum
-/dm_filter          = 0x0001 0x0000 /datum
-/image              = 0x0041 0x0004 /datum
-/mutable_appearance = 0x4041 0x0004 /image
-/database           = 0x1001 0x0000 /datum
-/database/query     = 0x1001 0x0000 /database
-/atom               = 0x0001 0x0004 /datum
-/turf               = 0x0001 0x0004 /atom
-/area               = 0x0001 0x000C /atom
-/atom/movable       = 0x0001 0x0004 /atom
-/mob                = 0x0001 0x0006 /atom/movable
-/obj                = 0x0001 0x0004 /atom/movable
+                        DMST   FLAG   TP PARENT
+/client             = 0x0001 0x0000      0
+/datum              = 0x0001 0x0000      0
+/sound              = 0x0221 0x0000      /datum
+/icon               = 0x0301 0x0000      /datum
+/matrix             = 0x0401 0x0000      /datum
+/regex              = 0x2001 0x0000      /datum
+/dm_filter          = 0x0001 0x0000      /datum
+/image              = 0x0041 0x0004 0x3F /datum
+/mutable_appearance = 0x4041 0x0004 0x3F /image
+/database           = 0x1001 0x0000      /datum
+/database/query     = 0x1001 0x0000      /database
+/atom               = 0x0001 0x0004 0x0A /datum
+/turf               = 0x0001 0x0004 0x0A /atom
+/area               = 0x0001 0x000C 0x0B /atom
+/atom/movable       = 0x0001 0x0004 0x09 /atom
+/obj                = 0x0001 0x0004 0x09 /atom/movable
+/mob                = 0x0001 0x0006 0x08 /atom/movable
 ```
+
+You may notice /world isn't here. That's because /world isn't a class.
 

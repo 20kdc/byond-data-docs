@@ -1,0 +1,29 @@
+// Turf/Atom Equivalence
+//  So far, all indications are that turfs and immovable atoms are exactly the same.
+//  This is an attempt to prove it.
+//  This also notes an interesting timing problem with turf replacement.
+
+/mob
+	verb/doTheThing()
+		world << "before:"
+		// have to delete previous content
+		// because documentation isn't being reliable
+		var/atom/ctmp = locate(1, 1, 1)
+		world << src.loc
+		del ctmp
+		spawn(1)
+			new /hole(locate(1, 1, 1))
+			spawn(1)
+				world << "after:"
+				world << src.loc
+				world << "before should be a square"
+				world << "after should be a hole, (implying the square was replaced with the hole)"
+
+/hole
+	parent_type = /atom
+	text = "O"
+
+// ---
+
+#include "chessboard.dm"
+

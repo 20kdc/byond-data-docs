@@ -2,6 +2,8 @@
 
 Type is a BYOND type number (this type numbering is shared with the protocol). Of these, at least the following are valid:
 
+(this is more-or-less collated from extools/dmdism)
+
 - 0 (null, value ignored)
 - 6 (string, as StringID)
 - 8 (mob type path, as MobTypeID)

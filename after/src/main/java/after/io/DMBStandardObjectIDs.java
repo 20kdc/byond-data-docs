@@ -1,7 +1,9 @@
 package after.io;
 
 import after.annotations.ClassID;
+import after.annotations.ListOfProcID;
 import after.annotations.MobTypeID;
+import after.annotations.ProcID;
 import after.annotations.StringID;
 import after.io.framework.DMBReadContext;
 import after.io.framework.DMBWriteContext;
@@ -15,7 +17,11 @@ public class DMBStandardObjectIDs {
 	public int turf = OBJ_NULL;
 	@ClassID // Nullable
 	public int area = OBJ_NULL;
-	public int[] idBA = new int[] {OBJ_NULL, OBJ_NULL, OBJ_NULL};
+	@ListOfProcID
+	public int procs = OBJ_NULL;
+	@ProcID // Nullable
+	public int globalVariableInitializer = OBJ_NULL;
+	public int idBAC = OBJ_NULL;
 	@StringID
 	public int name = OBJ_NULL;
 	// GEN < 368 (yes, under)
@@ -74,7 +80,9 @@ public class DMBStandardObjectIDs {
 		mob = rc.id();
 		turf = rc.id();
 		area = rc.id();
-		rc.ids(idBA);
+		procs = rc.id();
+		globalVariableInitializer = rc.id();
+		idBAC = rc.id();
 		name = rc.id();
 		if (rc.vGEN < 368)
 			idOld1 = rc.id();
@@ -134,7 +142,9 @@ public class DMBStandardObjectIDs {
 		wc.id(mob);
 		wc.id(turf);
 		wc.id(area);
-		wc.ids(idBA);
+		wc.id(procs);
+		wc.id(globalVariableInitializer);
+		wc.id(idBAC);
 		wc.id(name);
 		if (wc.vGEN < 368)
 			wc.id(idOld1);
