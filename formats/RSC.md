@@ -4,15 +4,17 @@
 
 An RSC file is actually a concatenated list of RSC entries.
 
-It has no encryption whatsoever, just verification.
+It has occasional encryption, but only in files you aren't supposed to poke at.
 
 Values are little-endian as with DMB.
 
 The outer entry structure is:
 
 1. Uint32 entryLength
-2. Uint8 unk
+2. Uint8 unk (I've only seen the value 0x01 for this)
 3. Array of entryLength Uint8s entryContent
+
+This is the same outer structure as with (SAV)[./SAV.md] - and it may be the same.
 
 ## Entry Content
 

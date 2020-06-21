@@ -14,4 +14,5 @@ after/external/test-subjects
 research-projects/*.dmb
 research-projects/*.lk
 research-projects/*.int
-
+# clutters the repo
+research-projects/*.sav

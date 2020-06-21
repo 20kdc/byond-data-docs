@@ -11,6 +11,7 @@ Type is a BYOND type number (this type numbering is shared with the protocol). O
 - 10 (/atom class, as ClassID)
 - 11 (/area class, as ClassID)
 - 32 (/datum class, as ClassID)
+- 36 (/savefile class, value ignored)
 - 40 (/list class, value ignored)
 - 42 (float, value should be transmuted from int to float)
 - 59 (/client class, as ClassID)

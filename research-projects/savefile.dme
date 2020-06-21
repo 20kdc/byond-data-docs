@@ -1,0 +1,55 @@
+// Savefile
+
+/mob/canary
+	var/fluffiness_text = ""
+
+/world
+	New()
+		var/savefile/target = new("savefile1.sav")
+		// example floats
+		target << 2 // 00 00 00 40
+		target << 8 // 00 00 00 41
+		target << 2 // 00 00 00 40
+		target << 8 // 00 00 00 41
+		// example strings
+		target << "AAAA" // 41 41 41 41
+		target << "BBBB" // 42 42 42 42
+		target << "CCCC" // 43 43 43 43
+		target << "DDDD" // 44 44 44 44
+		target.Flush()
+
+		// savefile using path for further research
+		target = new("savefile2.sav")
+		target["AAAA"] << 2 // 41 41 41 41 : 00 00 00 40
+		target["BBBB"] << 2
+		target.Flush()
+
+		// savefile using datum for even more research
+		target = new("savefile3.sav")
+		var/mob/canary/canary = new /mob/canary()
+		canary.fluffiness_text = "This canary is extremely fluffy."
+		target << canary
+		target.Flush()
+		target.ExportText("/", file("savefile3.txt.sav"))
+/*
+ * -- 1 --
+ *
+ * 00000000  10 00 00 00 01 00 02 00  00 27 01 00 00 00 00 00  |.........'......|
+ *                      |  {
+ * 00000010  00 00 00 00 00 3d 00 00  00 01 00 00 00 00 ff ff  |.....=..........|
+ *                         }            |  {
+ * 00000020  ff ff 00 30 00 00 00 3e  43 4c 55 1e 63 70 79 82  |...0...>CLU.cpy.|
+ *                                ^start
+ * xorjump9                       04  00 00 00 40 04 00 00 00
+ * 00000030  ca 90 9d a6 af f8 c5 ca  d3 dc a4 ef f3 00 48 53  |..............HS|
+ * xorjump9  41 04 00 00 00 40 04 00  00 00 41 01 04 00 41 41                 AA
+ * 00000040  5a 65 2c 32 3f 0a 13 18  21 6d 71 7e c4 d3 da e1  |Ze,2?...!mq~....|
+ * xorjump9  41 41 01 04 00 42 42 42  42 01 04 00 43 43 43 43   AA   BBBB   CCCC
+ * 00000050  aa b0 bd 82 8b 9c a5                              |.......|
+ * xorjump9  01 04 00 44 44 44 44                                  DDDD
+ *                               }
+ * at the indicated ^start point (0x27 - len 0x30), the xorjump9 key is 0x3a (0x43 - 9).
+ * the xorjump9 key for keys (not used here) is 0x53.
+ * for further research on this, see the SAV document and savefile\_analyzer.lua
+ */
+

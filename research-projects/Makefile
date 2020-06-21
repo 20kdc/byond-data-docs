@@ -1,6 +1,6 @@
 OBJECTS = \
  proc-inherit-quirks-1.dmb proc-inherit-quirks-2.dmb proc-inherit-quirks-3.dmb \
- rand-inherit.dmb turf-atom-equivalence.dmb
+ rand-inherit.dmb turf-atom-equivalence.dmb savefile.dmb
 
 all: $(OBJECTS)
 .PHONY: clean
