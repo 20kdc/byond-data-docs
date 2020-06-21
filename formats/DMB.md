@@ -378,7 +378,7 @@ A turf has the values (10, (some class ID), 0xFFFF).
 
 It is important to note that as far as I am aware, most properties of an initializer proc don't matter.
 
-Check the DMB.Bytecode.md file for more information.
+Check (Bytecode)[./DMB.Bytecode.md] for more information.
 
 ## Sub-Block 9 (Map Additional Data)
 
@@ -569,5 +569,9 @@ class flags:
 /mob                = 0x0001 0x0006 0x08 /atom/movable
 ```
 
-You may notice /world isn't here. That's because /world isn't a class.
+There's some additional notes worth keeping in mind:
+
+1. You may notice /world isn't here. That's because /world isn't a class.
+2. Turfs and atoms are one and the same.
+3. Objs and movable atoms are also one and the same.
 
