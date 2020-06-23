@@ -26,6 +26,8 @@ I don't know what the form is when large object IDs are enabled, but assume it's
 4. Access modifier 0xFFCD (65485) is actually "usr"
 5. `SRC_PROC_SPEC` access modifier has the important bits commented out, breaking everything
 6. SUBVAR right-hand-side parsing is completely wrong - the SUBVAR is just two accesses concatenated.
+7. 0xDB opcode; appears to be `text2ascii`, no args
+8. 0xDC opcode; appears to be `ascii2text`, no args
 
 The following code goes through a few different calls and accesses:
 
