@@ -20,6 +20,8 @@ public final class DMBValue {
 	public static final int RESOURCE = 12;
 	/** ClassID */
 	public static final int DATUM_TYPEPATH = 32;
+	public static final int SAVEFILE_TYPEPATH = 36;
+	public static final int FILE_TYPEPATH = 39;
 	public static final int LIST_TYPEPATH = 40;
 	public static final int FLOAT = 42;
 	/** ClassID */
