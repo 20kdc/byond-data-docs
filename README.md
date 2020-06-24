@@ -24,7 +24,7 @@ That said, if extools wants me to add their license here, ask via an issue or so
 
 Tomeno: important parts of string decryption
 
-NGGJamie: Documented the BYOND Topic protocol at https://github.com/NGGJamie/byond-topics
+BobOfDoom, NGGJamie, Crispy: Documented the BYOND Topic protocol at https://github.com/NGGJamie/byond-topics
 This was useful to understand BYOND packet framing, not covering encryption
 
 Stephen001: Partial documentation of some format version (right now unknown but >= 307 < 494) at https://github.com/Stephen001/Lego
