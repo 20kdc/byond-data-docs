@@ -12,7 +12,6 @@ import after.io.framework.DMBWriteContext;
  * The DM string table.
  */
 public class DMBStringTable extends DMBEntryBasedSubblock<byte[]> {
-	
 	/**
 	 * The NQCRC hash of the string table. Use calculateHash to get the correct value for this. 
 	 */
@@ -42,12 +41,25 @@ public class DMBStringTable extends DMBEntryBasedSubblock<byte[]> {
 	}
 	
 	@Override
+	public boolean indexReserved(int index) {
+		// Try extremely hard to avoid hitting the subvar strings.
+		if ((index >= 0xFFC0) && (index <= 0xFFFF))
+			return true;
+		return super.indexReserved(index);
+	}
+	
+	@Override
 	public void read(DMBReadContext rc) {
 		super.read(rc);
 		if (rc.vGEN >= 468)
 			hash = rc.io.getInt();
 	}
 	
+	@Override
+	protected byte[] createDummyValue() {
+		return new byte[0];
+	}
+
 	@Override
 	public byte[] readEntry(DMBReadContext rc) {
 		int totalLength = 0;

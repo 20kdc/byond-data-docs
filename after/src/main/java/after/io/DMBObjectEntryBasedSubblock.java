@@ -5,8 +5,11 @@ import java.util.LinkedList;
 import after.io.framework.DMBReadContext;
 import after.io.framework.DMBWriteContext;
 
-public abstract class DMBObjectEntryBasedSubblock<X extends DMBObjectEntryBasedSubblock.Entry> extends DMBEntryBasedSubblock<X> {
-	public static int OBJ_NULL = 0xFFFF;
+public abstract class DMBObjectEntryBasedSubblock<X extends DMBObjectEntryBasedSubblock.Entry> extends DMBEntryBasedSubblock<X> {	
+	@Override
+	protected X createDummyValue() {
+		return make();
+	}
 	
 	@Override
 	public X readEntry(DMBReadContext rc) {

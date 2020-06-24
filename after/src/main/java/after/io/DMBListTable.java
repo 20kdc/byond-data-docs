@@ -10,6 +10,11 @@ import after.io.framework.DMBWriteContext;
  */
 public class DMBListTable extends DMBEntryBasedSubblock<int[]> {
 	@Override
+	protected int[] createDummyValue() {
+		return new int[0];
+	}
+	
+	@Override
 	public int[] readEntry(DMBReadContext rc) {
 		int[] ie = new int[rc.io.getShort() & 0xFFFF];
 		rc.ids(ie);

@@ -9,6 +9,7 @@ import after.io.framework.DMBWriteContext;
  * This implements the basic 'list of X' logic. This is NOT exclusive with having other properties.
  */
 public abstract class DMBEntryBasedSubblock<X> {
+	public static int OBJ_NULL = 0xFFFF;
 
 	/**
 	 * The list of entries. This is a linked list for easier manipulation.
@@ -17,6 +18,15 @@ public abstract class DMBEntryBasedSubblock<X> {
 
 	public DMBEntryBasedSubblock() {
 		super();
+	}
+	
+	protected abstract X createDummyValue();
+	
+	/**
+	 * Indicates if a given index is reserved.
+	 */
+	public boolean indexReserved(int index) {
+		return index == OBJ_NULL;
 	}
 
 	protected int readCount(DMBReadContext rc) {
@@ -41,6 +51,10 @@ public abstract class DMBEntryBasedSubblock<X> {
 	
 	public int add(X value) {
 		int res = entries.size();
+		while (indexReserved(res)) {
+			entries.add(createDummyValue());
+			res++;
+		}
 		entries.add(value);
 		return res;
 	}

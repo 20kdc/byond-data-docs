@@ -8,6 +8,11 @@ import after.io.framework.DMBWriteContext;
  */
 public class DMBCacheFileTable extends DMBEntryBasedSubblock<CacheID> {
 	@Override
+	protected CacheID createDummyValue() {
+		return CacheID.ZERO;
+	}
+	
+	@Override
 	public CacheID readEntry(DMBReadContext rc) {
 		int uniqueID = rc.i32();
 		byte typeOrSomething = rc.i8();
