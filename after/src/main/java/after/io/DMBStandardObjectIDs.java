@@ -27,7 +27,7 @@ public class DMBStandardObjectIDs {
 	// GEN < 368 (yes, under)
 	public int idOld1 = OBJ_NULL;
 	// --
-	public int unkA = 100;
+	public int tickTimeMillis = 100;
 	@ClassID
 	public int client = OBJ_NULL;
 	// GEN >= 308
@@ -67,7 +67,8 @@ public class DMBStandardObjectIDs {
 	@StringID // Nullable
 	public int hub = OBJ_NULL;
 	// GEN >= 305
-	public int idAZA = OBJ_NULL;
+	@StringID // Nullable (?) but really should be "default"
+	public int channel = OBJ_NULL;
 	// GEN >= 360
 	public int idAZB = OBJ_NULL;
 	
@@ -86,7 +87,7 @@ public class DMBStandardObjectIDs {
 		name = rc.id();
 		if (rc.vGEN < 368)
 			idOld1 = rc.id();
-		unkA = rc.io.getInt();
+		tickTimeMillis = rc.io.getInt();
 		client = rc.id();
 		if (rc.vGEN >= 308)
 			image = rc.id();
@@ -123,7 +124,7 @@ public class DMBStandardObjectIDs {
 		if (rc.vGEN >= 276)
 			hub = rc.id();
 		if (rc.vGEN >= 305)
-			idAZA = rc.id();
+			channel = rc.id();
 		if (rc.vGEN >= 360)
 			idAZB = rc.id();
 		
@@ -148,7 +149,7 @@ public class DMBStandardObjectIDs {
 		wc.id(name);
 		if (wc.vGEN < 368)
 			wc.id(idOld1);
-		wc.i32(unkA);
+		wc.i32(tickTimeMillis);
 		wc.id(client);
 		if (wc.vGEN >= 308)
 			wc.id(image);
@@ -184,7 +185,7 @@ public class DMBStandardObjectIDs {
 		if (wc.vGEN >= 276)
 			wc.id(hub);
 		if (wc.vGEN >= 305)
-			wc.id(idAZA);
+			wc.id(channel);
 		if (wc.vGEN >= 360)
 			wc.id(idAZB);
 		if (wc.vLHS >= 455) {

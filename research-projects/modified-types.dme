@@ -1,0 +1,12 @@
+// Modified Types
+//  As it turns out, the instance table has dedicated types.
+
+/quacker
+	var/noise_text = "FAIL"
+	proc/quack()
+		world << noise_text
+
+/mob
+	verb/runTest()
+		new /quacker {noise_text = "PASS"} ().quack()
+

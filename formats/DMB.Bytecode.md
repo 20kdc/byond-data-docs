@@ -28,6 +28,8 @@ I don't know what the form is when large object IDs are enabled, but assume it's
 6. SUBVAR right-hand-side parsing is completely wrong - the SUBVAR is just two accesses concatenated.
 7. 0xDB opcode; appears to be `text2ascii`, no args
 8. 0xDC opcode; appears to be `ascii2text`, no args
+9. 0x29 type id; appears to be `type path for modified type`. Thanks to the Red Book for cluing me in on the existence of these. My name for this type is `INSTANCE_TYPEPATH`. Takes an instance table ID
+10. 0x3F type id; `IMAGE_TYPEPATH`, takes a class ID like the others
 
 The following code goes through a few different calls and accesses:
 

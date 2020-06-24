@@ -29,3 +29,4 @@ This was useful to understand BYOND packet framing, not covering encryption
 
 Stephen001: Partial documentation of some format version (right now unknown but >= 307 < 494) at https://github.com/Stephen001/Lego
 
+The Red Book (Super Saiyan X, LordAndrew, Kaiochao, DarkCampainger et al.): Informed me of the existence of modified types.

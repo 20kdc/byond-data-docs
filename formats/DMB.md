@@ -414,7 +414,7 @@ If GEN Version < 368 (YES, UNDER) {
 
 }
 
-1. Uint32 unk (Seems to default to 100, but isn't necessary)
+1. Uint32 tickTimeMillis (This is related to server tick time and is likely in milliseconds. Seems to default to 100.)
 2. ClassID client
 
 If GEN Version >= 308 {
@@ -499,7 +499,7 @@ If GEN Version >= 276 {
 
 If GEN Version >= 305 {
 
-1. ObjectID unk (seems to be the string "default"?)
+1. Nullable StringID channel (`world.channel` ; might not ACTUALLY be nullable ; undocumented but DreamMaker understands it ; seems to be the string "default"?)
 
 }
 
@@ -532,10 +532,18 @@ These correspond to entries in the relevant RSC files.
 
 ## The Requirements For A DMB File To Be Loadable (Eden)
 
+### Minimum
+
 Honestly, I'm not even sure what the minimum is.
 Check the included source at this point, and go down from there.
 
-## The Annotated Standard Class Hierarchy
+### Important Things Of Note
+
+BYOND *may* expect strings to have their DM-compiler-generated "word IDs".
+
+That is, strings being compared by-ID to constants without the runtime verifying that they are in fact the correct constants.
+
+### The Annotated Standard Class Hierarchy
 
 It's important to note that some classes are actually BYOND built-in types.
 

@@ -1,0 +1,8 @@
+// World Channel
+//  Seems to just be "default"
+
+/mob
+	Login()
+		. = ..()
+		world << world.channel
+
