@@ -1,18 +1,10 @@
 # MOSTLY COMPLETE
 
-## Outer Structure
+For the outer structure, see (RAD)[./RAD.md].
 
-A savefile is a concatenated set of savefile entries.
+Values remain little-endian as with DMB.
 
-Values are little-endian as with DMB.
-
-Each entry has the structure:
-
-1. Uint32 entryLength
-2. Uint8 unk (I've only seen the value 0x01 for this)
-3. Array of entryLength Uint8s entryContent
-
-This is the same outer structure as with (RSC)[./RSC.md] - and it may be the same.
+The inner structure identifies entry components and is the actual data.
 
 ## Entry Content
 

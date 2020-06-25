@@ -1,33 +1,38 @@
-# MOSTLY COMPLETE
+# RSC (*.rsc) Format
 
-## Outer Structure
+Status on documentation: Complete reading-wise but checksum details not worked out yet for writing. `byond.rsc` considered irrelevant *unless the encryption crosses over into protocol research*.
 
-An RSC file is actually a concatenated list of RSC entries.
+## Details
 
-It has occasional encryption, but only in files you aren't supposed to poke at.
+For the outer structure, see (RAD)[./RAD.md].
 
-Values are little-endian as with DMB.
-
-The outer entry structure is:
-
-1. Uint32 entryLength
-2. Uint8 unk (I've only seen the value 0x01 for this)
-3. Array of entryLength Uint8s entryContent
-
-This is the same outer structure as with (SAV)[./SAV.md] - and it may be the same.
-
-## Entry Content
-
-The outer structure allows skipping through entries easily.
+Values remain little-endian as with DMB.
 
 The inner structure identifies entry components and is the actual data.
 
 1. Uint8 typeOrSomething (corresponds to Cache File typeOrSomething in DMB)
-2. Uint32 uniqueID (corresponds to Cache File uniqueID in DMB)
-3. Array of 8 Uint8s unk
-4. Uint32 dataLength
-5. Zero-terminated string filename
-6. Array of dataLength Uint8s data
+2. Uint32 uniqueID (corresponds to Cache File uniqueID in DMB) - *this is probably also a checksum / hash / ??? of the data and/or entry, but details are unknown*
+3. Uint32 timestamp (seconds since the Unix epoch, UTC)
+4. Uint32 originalTimestamp (this is the modification time *of the imported file* (presumably to determine which files to update). In `byond.rsc`, this is 0.)
+5. Uint32 dataLength
+6. Zero-terminated string filename
+7. Array of dataLength Uint8s data
+
+The data in these entries is *usually* unencrypted unless you're poking `byond.rsc`.
+
+DreamDaemon does not understand encrypted entries.
 
 Regarding the mapping to the DMB file: The order is swapped. This is known and correct.
 
+## Entry Types
+
+```
+0x01: MIDI file.
+0x02: OGG or WAV file.
+0x03: DMI PNG file.
+0x06: Plain PNG file.
+0x0B: Plain JPG file.
+
+The flag 0x80 can be added to any of these to indicate encryption (details unknown).
+
+```
