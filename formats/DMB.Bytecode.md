@@ -6,7 +6,7 @@ However, MCHSL & SpaceManiac's project, extools, is known to contain a disassemb
 
 ## PUSHVAL
 
-PUSHVAL's argument is the usual (TypeValue)[./DMB.TypeValue.md] pair.
+PUSHVAL's argument is the usual [TypeValue](./DMB.TypeValue.md) pair.
 
 However, due to the 16-bit nature of lists (normally), there's a slight modification to the encoding.
 

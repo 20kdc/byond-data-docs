@@ -244,7 +244,7 @@ The string table contains all DMStrings.
 
 As is the pattern so far, there is some amount of entries represented as an ObjectID.
 
-An ongoing 32-bit hash (NQCRC)[../algorithms/NQCRC.md] is maintained throughout the string table, initialized to -1.
+An ongoing 32-bit hash [NQCRC](../algorithms/NQCRC.md) is maintained throughout the string table, initialized to -1.
 
 For each entry {
 
@@ -277,7 +277,7 @@ With official software, if the string length happens to be exactly equal to 0xFF
     text = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+F+G+H+I+J+K+L+M+N+O+P
 ```
 
-Finally, the string is written, encrypted with (XORJUMP9)[../algorithms/XORJUMP9.md].
+Finally, the string is written, encrypted with [XORJUMP](../algorithms/XORJUMP9.md).
 
 The key is again the file position (at string start) minus the "base pointer/key".
 
@@ -331,7 +331,7 @@ For GEN Versions >= 224 OR if large object IDs are on {
 5. Uint8 unk (usually 0)
 6. Uint8 x (Seems to be flags - setting to 0 causes the verb menu to appear, while setting to 5 causes it to disappear.)
 7. If x has the high bit set, Uint32 unk, Uint8 unk.
-8. ListID code (See (Bytecode)[./DMB.Bytecode.md] for further information)
+8. ListID code (See [Bytecode](./DMB.Bytecode.md) for further information)
 9. ListID of VarID locals (note that this isn't nullable)
 10. ListID args (note that this isn't nullable) (it's also complicated - VarIDs are involved, but also other stuff)
 
@@ -345,7 +345,7 @@ For each entry {
 2. Uint32 value
 3. StringID name
 
-For further information on the type/value part, see (TypeValue)[./DMB.TypeValue.md].
+For further information on the type/value part, see [TypeValue](./DMB.TypeValue.md).
 
 }
 
@@ -371,14 +371,14 @@ For each entry:
 2. Uint32 value
 3. Nullable ProcID initializer (used to set per-instance properties)
 
-For further information on the type/value part, see (TypeValue)[./DMB.TypeValue.md].
+For further information on the type/value part, see [TypeValue](./DMB.TypeValue.md).
 But to be particular, this represents a 
 
 A turf has the values (10, (some class ID), 0xFFFF).
 
 It is important to note that as far as I am aware, most properties of an initializer proc don't matter.
 
-Check (Bytecode)[./DMB.Bytecode.md] for more information.
+Check [Bytecode](./DMB.Bytecode.md) for more information.
 
 ## Sub-Block 9 (Map Additional Data)
 

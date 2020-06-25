@@ -1,6 +1,6 @@
 # MOSTLY COMPLETE
 
-For the outer structure, see (RAD)[./RAD.md].
+For the outer structure, see [RAD](./RAD.md).
 
 Values remain little-endian as with DMB.
 
@@ -31,9 +31,9 @@ Otherwise, data entries follow this general format:
 1. Uint32 index (starts at 0)
 2. Uint32 parent (-1, unless the entry has a parent, in which case it is the parent entry's index)
 3. Uint8 keyLength
-4. Array of keyLength Uint8s - (XORJUMP9)[../algorithms/XORJUMP9.md] encrypted, key 0x53
+4. Array of keyLength Uint8s - [XORJUMP9](../algorithms/XORJUMP9.md) encrypted, key 0x53
 5. Uint32 dataLength
-6. Array of dataLength Uint8s - (XORJUMP9)[../algorithms/XORJUMP9.md] encrypted, key 0x3A
+6. Array of dataLength Uint8s - [XORJUMP9](../algorithms/XORJUMP9.md) encrypted, key 0x3A
 
 ## Entry Value Formats
 

@@ -16,7 +16,7 @@ However, after the handshake packet, CtoS packets gain an additional "sequence n
 
 StoC packet encryption might be different on a packet-to-packet basis. Not strictly sure.
 
-I'm referring to the encryption algorithm as (RUNSUB)[../algorithms/RUNSUB.md] right now.
+I'm referring to the encryption algorithm as [RUNSUB](../algorithms/RUNSUB.md) right now.
 
 I'm not sure about CtoS packets - they probably do the same thing, but don't be sure.
 

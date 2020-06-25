@@ -4,7 +4,7 @@ Status on documentation: Complete reading-wise but checksum details not worked o
 
 ## Details
 
-For the outer structure, see (RAD)[./RAD.md].
+For the outer structure, see [RAD](./RAD.md).
 
 Values remain little-endian as with DMB.
 
