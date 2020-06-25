@@ -32,13 +32,17 @@ It seems to be a single null byte, which could indicate that it's actually a str
 
 This is sent at the start of any connection.
 
-It always seems to have 18 bytes of content.
+It always seems to have 18 bytes of content in modern versions.
 
-1. Uint32BE byondVersion
-2. Uint32BE unk
-3. Uint8 unk (The XOR key for the first 2 byte of an StoC packet seems to be this + 1.)
-4. 5 unknown bytes
-5. Uint32BE byondMinorVersion
+1. Uint32LE byondVersion
+2. Uint32LE minVersion
+3. Uint32LE encryptionKeyModified
+4. Uint16LE unk (could be related to the sequence number business, CHECK THIS)
+5. Uint32LE byondMinorVersion (note: this isn't present in v354, but I don't know which version it was added to)
+
+The exact details of the encryption key modification are `encryptionKeyModified = encryptionKey - ((minVersion * 0x10000) + byondVersion)`.
+
+The server sends back it's handshake packet in response.
 
 ## Packets (StoC)
 
@@ -50,44 +54,19 @@ It is already encrypted (which indicates the key must be present in the communic
 
 It has 60 bytes of content.
 
-1. Uint32BE byondVersion (BUT ENCRYPTED)
-2. 56 unknown bytes
+1. Uint32LE byondVersion
+2. Uint32LE minVersion
+3. Uint8 portTruncated
+4. Uint8 dmbFlagsHasEx
+5. Padding to hide key: read Uint32BE, add 0x71bd632f, AND 0x04008000 - if not 0, repeat
+6. Uint32LE addToEncryptionKey
+7. Padding to hide key: read Uint32BE, add 0x17db36e3, AND 0x00402000 - if not 0, repeat
+
+addToEncryptionKey has to be added to the encryption key.
+
+The client sends back something else in response.
 
 ### 0x0027: Incoming Message
 
 This is sent from server to client.
-
-## Decryption workpad
-
-```
-between client 513 (01 02) and server 512 (00 02)
-
-C 0 1
-R 01 02 00 00 14 01 00 00 af bc be 12 da 91 f6 05 00 00
-
-NOTE that this byte       ^
- is the key for the first packet - 1
- current working theory is that the packet type is somehow involved too
-
-S 0 1
-R b0 b2 ae ae 98 18 82 82 83 39 95 9e 53 e7 f6 4e 85 be (...)
-T 00 02 00 00       00 00
-K b0 b0 ae ae ?? ?? 82 82 ?? ?? ?? ?? ?? ?? ?? ?? ?? ??
-
-T: theory
-K: key
-
-theory: content-based : subtract data from key??? add, not XOR?
- content-based would explain the oddities in changes, so almost certainly true
- but I'm having trouble developing a consistent theory
-
-there's too many single-byte (00) packets... coincidence, ignored data, oddities???
-note that *empty* packets don't seem to be a thing
-
--- notes on cycle --
-
-note: the LACK of cycles with same input values on 'A'
-but also note: that despite different inputs, the 256 repetition "settles" with the final 3 bytes
-
-```
-
+Details unknown.

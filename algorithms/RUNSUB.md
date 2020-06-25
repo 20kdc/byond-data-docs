@@ -1,18 +1,15 @@
 # RUNSUB
 
-This is an interesting algorithm... that I haven't fully documented.
+The RUNSUB encryption algorithm operates on buffers of data at a time.
 
-It's:
+It has two state values:
 
-1. content-aware
-2. per-byte
+1. A Uint8 running checksum of unencrypted data. This is a checksum in the literal 'add' sense, and wraps.
+2. A Uint32 key.
 
-it seems to have a running key like XORJUMP9
+For each byte, encryption adds `checksum + (key >> (checksum % 32))` to the data byte (the shift zero-extends).
 
-but it also seems to have some other, unknown state
+The checksum is updated after each byte. Again, it's a checksum of the unencrypted data.
 
-general decryption operation appears to be something like "subtract key from byte to get decrypted byte",
- with an unknown key modifier applied - sometimes it's consistent with SUB, sometimes it's consistent with XOR, sometimes neither
-
-however, this only covers a slim subset of RUNSUB input
+It writes the checksum byte unencrypted at the end of the message.
 

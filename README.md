@@ -22,7 +22,7 @@ extools (SpaceManiac, MCHSL, 1fbff5f83b23d39d38b1dfcb4cac8d9b et al.): DM byteco
 Notes on this regard: This doesn't contain extools code.
 That said, if extools wants me to add their license here, ask via an issue or something.
 
-Tomeno: important parts of string decryption
+Tomeno: important parts of string decryption and protocol decryption
 
 BobOfDoom, NGGJamie, Crispy: Documented the BYOND Topic protocol at https://github.com/NGGJamie/byond-topics
 This was useful to understand BYOND packet framing, not covering encryption
