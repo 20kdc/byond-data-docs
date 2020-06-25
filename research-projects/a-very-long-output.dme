@@ -1,10 +1,22 @@
 // A Very Long Output
 
+#define W16 "                "
+#define W64 (W16 + W16 + W16 + W16)
+#define W256 (W64 + W64 + W64 + W64)
+
 #define S16 "@@@@@@@@@@@@@@@@"
 #define S64 (S16 + S16 + S16 + S16)
 #define S256 (S64 + S64 + S64 + S64)
 
+#define T16 "AAAAAAAAAAAAAAAA"
+#define T64 (T16 + T16 + T16 + T16)
+#define T256 (T64 + T64 + T64 + T64)
+
 /mob
-	verb/beep()
+	verb/x20()
+		world << W256
+	verb/x40()
 		world << S256
+	verb/x41()
+		world << T256
 
