@@ -1,0 +1,10 @@
+// A Very Long Output
+
+#define S16 "@@@@@@@@@@@@@@@@"
+#define S64 (S16 + S16 + S16 + S16)
+#define S256 (S64 + S64 + S64 + S64)
+
+/mob
+	verb/beep()
+		world << S256
+

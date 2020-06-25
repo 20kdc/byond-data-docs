@@ -16,3 +16,6 @@ research-projects/*.lk
 research-projects/*.int
 # clutters the repo
 research-projects/*.sav
+# not sure what to do with these, and it's not like they're hard to get
+protocol/*.dump.txt
+
