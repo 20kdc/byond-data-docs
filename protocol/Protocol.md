@@ -14,12 +14,24 @@ The BYOND protocol is split into frames.
 
 Each frame has the following form:
 
-1. Uint16BE sequence (Only present on CtoS frames that aren't the handshake.)
-2. Uint16BE type
-3. Uint16BE length
-4. Array of length Uint8s data
+For CtoS frames that aren't the handshake {
 
-Each frame *must* be sent as a single write call. (Yes, really.)
+1. Uint16BE sequence (Only present on CtoS frames that aren't the handshake.)
+
+}
+
+1. Uint16BE type
+2. Uint16BE length
+3. Array of length Uint8s data
+
+Each frame *must* be sent as a single write call. (It has to do with the PSH flag.)
+
+The sequence number is initialized in the client's handshake, and is advanced with the following method:
+
+1. Multiply the current sequence number by 0x43d4 - the result must be 32-bit.
+2. Add this result to itself divided by 0xFFF1 and multiplied by 15, again all 32-bit.
+3. This result, cast to Uint16, is the new sequence number except for one last rule:
+3. If the sequence number is 0 (keeping in mind it's Uint16): Set it to 1.
 
 Additionally, there's a Uint32 piece of state not encoded here: The encryption key. If it is not 0, encryption is active.
 
@@ -44,7 +56,7 @@ It always seems to have 18 bytes of content in modern versions.
 1. Uint32LE byondVersion
 2. Uint32LE minVersion
 3. Uint32LE encryptionKeyModified
-4. Uint16LE firstSequenceNumber (this is the first sequence number)
+4. Uint16LE firstSequenceNumber (this is the first sequence number the client will use)
 5. Uint32LE byondMinorVersion (note: this isn't present in v354, but I don't know which version it was added to)
 
 The exact details of the encryption key modification are `encryptionKeyModified = encryptionKey - ((minVersion * 0x10000) + byondVersion)`.
