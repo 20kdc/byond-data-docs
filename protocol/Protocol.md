@@ -2,23 +2,28 @@
 
 ## Endianness
 
-The BYOND protocol uses big-endian for types and lengths. Outside of this, uncertain.
+The BYOND protocol uses big-endian for types and lengths. Outside of this, uncertain but probably LE everywhere.
 
-Because of this, endianness has to be explicitly stated.
+Because of this, endianness has to be explicitly stated in docs when anything is being transmitted.
 
 ## Framing
 
-The BYOND protocol is framed in a "type/length/value" form.
+The BYOND protocol is split into frames.
 
-Specifically, two Uint32BE values represent the type and length in that order.
+Each frame has the following form:
 
-However, after the handshake packet, CtoS packets gain an additional "sequence number" Uint32BE value before the type and length.
+1. Uint16BE sequence (Only present on CtoS frames that aren't the handshake.)
+2. Uint16BE type
+3. Uint16BE length
+4. Array of length Uint8s data
 
-StoC packet encryption might be different on a packet-to-packet basis. Not strictly sure.
+Each frame *must* be sent as a single write call. (Yes, really.)
 
-I'm referring to the encryption algorithm as [RUNSUB](../algorithms/RUNSUB.md) right now.
+Additionally, there's a Uint32 piece of state not encoded here: The encryption key. If it is not 0, encryption is active.
 
-I'm not sure about CtoS packets - they probably do the same thing, but don't be sure.
+The encryption algorithm has been named [RUNSUB](../algorithms/RUNSUB.md) for now, and applies to the data.
+
+It's woven into the handshake procedure so that neither a modified client nor a modified server can force a zero encryption key, only both.
 
 ## Packets (CtoS)
 
@@ -37,7 +42,7 @@ It always seems to have 18 bytes of content in modern versions.
 1. Uint32LE byondVersion
 2. Uint32LE minVersion
 3. Uint32LE encryptionKeyModified
-4. Uint16LE unk (could be related to the sequence number business, CHECK THIS)
+4. Uint16LE firstSequenceNumber (this is the first sequence number)
 5. Uint32LE byondMinorVersion (note: this isn't present in v354, but I don't know which version it was added to)
 
 The exact details of the encryption key modification are `encryptionKeyModified = encryptionKey - ((minVersion * 0x10000) + byondVersion)`.
@@ -56,11 +61,12 @@ It has 60 bytes of content.
 
 1. Uint32LE byondVersion
 2. Uint32LE minVersion
-3. Uint8 portTruncated
+3. Uint8 isPermanentPort (1 if so, 0 otherwise)
 4. Uint8 dmbFlagsHasEx
-5. Padding to hide key: read Uint32BE, add 0x71bd632f, AND 0x04008000 - if not 0, repeat
-6. Uint32LE addToEncryptionKey
-7. Padding to hide key: read Uint32BE, add 0x17db36e3, AND 0x00402000 - if not 0, repeat
+5. Uint8 unk (introduced in v433)
+6. Padding: Read Uint32LE, add 0x71bd632f then AND 0x04008000 - if not 0, repeat. For example, 0x06beb95e terminates, 0x1ed688b0 doesn't.
+7. Uint32LE addToEncryptionKey
+8. Padding: Read Uint32LE, add 0x17db36e3 then AND 0x00402000 - if not 0, repeat. For example, 0x69b7216b terminates.
 
 addToEncryptionKey has to be added to the encryption key.
 

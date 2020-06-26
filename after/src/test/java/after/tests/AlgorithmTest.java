@@ -36,7 +36,7 @@ public class AlgorithmTest {
 		int key = 0xa374c5b8;
 		
 		// Decrypt
-		RUNSUB.decrypt(data, key);
+		RUNSUB.decrypt(data, 0, data.length, key);
 		assert data[0] == '@';
 		assert data[1] == '@';
 		assert data[2] == '@';
@@ -45,7 +45,7 @@ public class AlgorithmTest {
 		assert data[5] == 0;
 
 		// Encrypt again and compare to the original
-		RUNSUB.encrypt(data, key);
+		RUNSUB.encrypt(data, 0, data.length, key);
 		for (int i = 0; i < data.length; i++)
 			assert data[i] == dataCopy[i];
 	}
