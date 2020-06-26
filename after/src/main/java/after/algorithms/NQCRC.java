@@ -14,7 +14,19 @@ public class NQCRC {
 		}
 	}
 	
+	/**
+	 * Advances NQCRC by a single byte.
+	 */
 	public static int hash(int hash, byte byt) {
 		return (hash << 8) ^ nqcrcTable[(hash >>> 24) ^ (byt & 0xFF)];
+	}
+
+	/**
+	 * Advances NQCRC by an array of bytes.
+	 */
+	public static int hash(int hash, byte[] data) {
+		for (byte b : data)
+			hash = hash(hash, b);
+		return hash;
 	}
 }

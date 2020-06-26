@@ -5,7 +5,7 @@
 local nqcrcTable = {}
 for i = 0, 255 do
 	local value = bit.lshift(i, 0x18)
-	for j = 0, 8 do
+	for j = 0, 7 do
 		local mod = 0
 		if value < 0 then
 			mod = 0xAF
@@ -21,9 +21,11 @@ local hash = 0
 while true do
 	local bt = f:read(1)
 	if not bt then break end
-	hash = bit.bxor(bit.lshift(hash, 8), nqcrcTable[bit.bxor(bit.rshift(hash, 24), bt:byte(1))])
+	hash = bit.bxor(bit.lshift(hash, 8), nqcrcTable[bit.band(bit.bxor(bit.rshift(hash, 24), bt:byte()), 0xFF)])
 end
 
-hash = math.abs(hash)
+if hash < 0 then
+	hash = hash + 0x100000000
+end
 print(string.format("%08x", hash))
 

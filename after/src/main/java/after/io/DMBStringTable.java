@@ -23,8 +23,7 @@ public class DMBStringTable extends DMBEntryBasedSubblock<byte[]> {
 	public int calculateHash() {
 		int value = -1;
 		for (byte[] entry : entries) {
-			for (byte b : entry)
-				value = NQCRC.hash(value, b);
+			value = NQCRC.hash(value, entry);
 			value = NQCRC.hash(value, (byte) 0);
 		}
 		return value;
