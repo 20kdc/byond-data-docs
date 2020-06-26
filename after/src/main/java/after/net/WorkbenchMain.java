@@ -127,7 +127,7 @@ public class WorkbenchMain {
 				// final pass: ASCII
 				for (int i = 0; i < len; i++) {
 					char c = (char) (pf.dataArray[i] & 0xFF);
-					if (c >= 32 && c != 127) {
+					if (c >= 32 && c <= 0x7E) {
 						System.out.print(" " + c + " ");
 					} else {
 						System.out.print(" . ");

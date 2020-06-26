@@ -1,10 +1,12 @@
 # INCOMPLETE
 
-## Endianness
+## Endianness And Formats
 
 The BYOND protocol uses big-endian for types and lengths. Outside of this, uncertain but probably LE everywhere.
 
 Because of this, endianness has to be explicitly stated in docs when anything is being transmitted.
+
+Strings are null-terminated, not length-prefixed.
 
 ## Framing
 
@@ -47,7 +49,23 @@ It always seems to have 18 bytes of content in modern versions.
 
 The exact details of the encryption key modification are `encryptionKeyModified = encryptionKey - ((minVersion * 0x10000) + byondVersion)`.
 
-The server sends back it's handshake packet in response.
+The server sends back it's own handshake - 0x0001 - in response.
+
+### 0x0002: Invoke Verb
+
+Further details unknown, just know it involves some sorta client-local verb index system (see StoC 0x0011)
+
+My tests look like:
+
+`02 00 00 00 02 00 00 00 00 00` (invokes verb index 0)
+`02 00 01 00 02 00 00 00 00 00` (invokes verb index 1)
+`02 00 02 00 02 00 00 00 00 00` (invokes verb index 2)
+
+### 0x001a: PHS 1
+
+Further details unknown.
+
+The server sends back 0x003b in response.
 
 ## Packets (StoC)
 
@@ -70,9 +88,67 @@ It has 60 bytes of content.
 
 addToEncryptionKey has to be added to the encryption key.
 
-The client sends back something else in response.
+The client sends back 0x001a in response.
+
+### 0x000e: PHS 4
+
+Further details unknown.
+
+This is the point where the server starts sending packets I can immediately verify it repeatedly sends.
+
+I don't intend to document everything right now, just get the webclient working.
+
+The communications (which are sometimes bi-direction) end with the server sending 0x0018 and then a batch of 0x0011.
+
+### 0x0011: Register Verb Index
+
+This registers a verb index.
+
+It's important to note that these verbs are immediately usable.
+
+1. Uint16LE index
+2. String name
+3. Unknown stuff (00 00 ff 00 04 00 for my test verbs but could be of any length)
+
+### 0x0018: PHS 5
+
+Further details unknown. Empty in my tests.
+
+By this point the client is in-game, and gets sent verb indexes.
+
+### 0x0026: Describe Atom Appearance
+
+1. 4 bytes (??? subject to change ???)
+2. String text
+3. 6 bytes
+4. The text character, but not sure how it's represented
+
+Further details unknown.
+
+This appears to be describing the appearance of an atom.
 
 ### 0x0027: Incoming Message
 
 This is sent from server to client.
-Details unknown.
+
+1. String text
+2. WebClient *suggests* that there is optional stuff here the existence of which is based on if there's room or not.
+
+### 0x003b: PHS 2
+
+Further details unknown.
+
+This is followed by 0x00ef.
+
+### 0x0072: Server Information
+
+Further details unknown.
+
+This contains a lot of stuff that looks like server information.
+
+### 0x00ef: PHS 3
+
+Further details unknown.
+
+This is followed by 0x000e.
+
