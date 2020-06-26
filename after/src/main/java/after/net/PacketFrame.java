@@ -10,6 +10,7 @@ import java.nio.ByteOrder;
 /**
  * This is the framing of a packet.
  * This doesn't handle encryption, on purpose.
+ * It's also not thread-safe, even for 'thread-safe-looking' operations.
  */
 public class PacketFrame {
 	/**
@@ -74,5 +75,31 @@ public class PacketFrame {
 		ptr += len;
 		// And now commit.
 		dos.write(writeDataArray, 0, ptr);
+	}
+	
+	public void writeWebSocket(DataOutputStream dos) throws IOException {
+		writeWebSocketInternal(dos, type, dataArray, 0, data.position());
+	}
+	
+	public static void writeWebSocketInternal(DataOutputStream dos, short type, byte[] data, int offset, int length) throws IOException {
+		// FIN, Binary
+		dos.write(0x82);
+		int pktLen = length + 2;
+		if (pktLen < 126) {
+			dos.write(pktLen);
+		} else if (pktLen < 65536) {
+			dos.write(126);
+			dos.writeShort(pktLen);
+		} else  {
+			dos.write(0x7F);
+			dos.writeLong(length + 2);
+		}
+		dos.writeShort(type);
+		dos.write(data, offset, length);
+	}
+	
+	public void begin(int t) {
+		data.position(0);
+		type = (short) t;
 	}
 }

@@ -84,12 +84,12 @@ abstract class WebAdapterBaseWebClientRunnable implements Runnable {
 					contentResult = "NO".getBytes();
 				} else {
 					String[] bits = path.split("/");
-					if (bits.length == 0) {
+					if (bits.length == 0 || bits[bits.length - 1].equals("play")) {
 						StringBuilder ongoing = new StringBuilder();
 						// this is actually all that needs to be done
-						// it sets up the canvas itself, for better or worse
-						ongoing.append("<script src=\"ext.js\"></script>");
-						ongoing.append("<script src=\"webclient.dart.js\"></script>");
+						ongoing.append("<script src=\"/res/ext.js\"></script>");
+						ongoing.append("<script src=\"/res/webclient.dart.js\"></script>");
+						ongoing.append("<div id=\"skin\"></div>");
 						contentResult = ongoing.toString().getBytes();
 					} else {
 						try {
