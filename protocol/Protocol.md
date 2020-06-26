@@ -90,9 +90,11 @@ addToEncryptionKey has to be added to the encryption key.
 
 The client sends back 0x001a in response.
 
-### 0x000e: PHS 4
+### 0x000e: Cache List
 
 Further details unknown.
+
+WebClient expects 6 bytes but regular clients don't need any. Almost certainly a different format.
 
 This is the point where the server starts sending packets I can immediately verify it repeatedly sends.
 
