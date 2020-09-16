@@ -11,6 +11,6 @@ Values are little-endian as with DMB.
 The outer entry structure is:
 
 1. Uint32 entryLength
-2. Uint8 valid (0x01 for valid entries, 0x00 for invalid entries.)
+2. Uint8 valid (0x01 for valid entries, 0x00 for invalid entries. Note that invalid entries will have nonsensical content that can crash your reader.)
 3. Array of entryLength Uint8s entryContent
 
