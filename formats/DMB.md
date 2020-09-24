@@ -129,7 +129,7 @@ Each class has:
 
 For GEN Versions >= 307, additionally {
 
-1. Uint8 dmSpecialType (See: The Annotated Standard Class Hierarchy. IFL).
+1. Uint8 dmInterface (See: The Annotated Standard Class Hierarchy. IFL).
 2. If it's 0x0F (*not* 0xFF!), then a Uint32 follows to replace it.
 
 If the format version is insufficient, this defaults to 1.
@@ -555,9 +555,12 @@ class flags:
  CF_ATOM = 0x0004 Seems to control access to atom procs in some way.
  CF_AREA = 0x0008
 
+'DMIF' is dmInterface, seen as _dm_interface in stddef.dm (see https://github.com/tgstation/FastDMM/blob/master/src/main/resources/stddef.dm )
+ (This is a bitfield, but actually attempting to match the flags as described there doesn't always work - atom/movable are always off.)
+
 'TP' is the type when it shows up in the Instance Table.
 
-                        DMST   FLAG   TP PARENT
+                        DMIF   FLAG   TP PARENT
 /client             = 0x0001 0x0000      0
 /datum              = 0x0001 0x0000      0
 /sound              = 0x0221 0x0000      /datum
