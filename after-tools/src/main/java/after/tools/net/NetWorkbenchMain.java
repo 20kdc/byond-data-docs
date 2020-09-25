@@ -1,4 +1,4 @@
-package after.net;
+package after.tools.net;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,11 +13,12 @@ import java.nio.channels.SocketChannel;
 import java.util.Set;
 
 import after.algorithms.RUNSUB;
+import after.net.PacketFrame;
 
 /**
  * Testing utility for studying the protocol.
  */
-public class WorkbenchMain {
+public class NetWorkbenchMain {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Listening on port 5100. Expects target server on localhost port 5101.");
 		ServerSocketChannel ss = ServerSocketChannel.open();

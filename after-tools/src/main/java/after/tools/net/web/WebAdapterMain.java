@@ -1,4 +1,4 @@
-package after.net.web;
+package after.tools.net.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

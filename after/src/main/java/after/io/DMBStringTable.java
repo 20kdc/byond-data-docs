@@ -107,6 +107,15 @@ public class DMBStringTable extends DMBEntryBasedSubblock<byte[]> {
 	public static String fromWTF(byte[] dat) {
 		return new String(dat, StandardCharsets.ISO_8859_1);
 	}
+
+	public static boolean equal(byte[] a, byte[] b) {
+		if (a.length != b.length)
+			return false;
+		for (int i = 0; i < a.length; i++)
+			if (a[i] != b[i])
+				return false;
+		return true;
+	}
 	
 	/**
 	 * Gets a string by the "internal" value.

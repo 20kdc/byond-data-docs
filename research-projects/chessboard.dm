@@ -1,5 +1,9 @@
 /turf/white_tile
+	text = ":"
+
+/turf/grey_tile
 	text = "."
+	var/interesting = 1
 
 /turf/black_tile
 	text = " "

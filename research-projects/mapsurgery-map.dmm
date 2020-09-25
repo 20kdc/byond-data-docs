@@ -1,0 +1,15 @@
+"a" = (/turf/white_tile,/area)
+"b" = (/turf/grey_tile,/area)
+"c" = (/turf/black_tile,/area)
+"d" = (/turf/grey_tile { text = "> " ; interesting = 1 },/area)
+(1, 1, 1) = {"
+aaaaaaac
+abbbbbbc
+abbaaabc
+ababbbbc
+ababbbbc
+abbaaabc
+abbbbbdc
+cccccccc
+"}
+

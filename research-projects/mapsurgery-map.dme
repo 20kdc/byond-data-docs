@@ -1,0 +1,11 @@
+// just for editing the map
+
+/turf/white_tile
+
+/turf/grey_tile
+	var/interesting = 1
+
+/turf/black_tile
+
+#include "mapsurgery-map.dmm"
+

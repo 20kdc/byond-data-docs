@@ -1,13 +1,15 @@
 *.jar
 *.class
 *.zip
-after/*.iml
-after/.idea
-after/.classpath
-after/.project
-after/.settings
-after/.gradle
+*.iml
+.idea
+.classpath
+.project
+.settings
+.gradle
+
 after/build
+after-tools/build
 after/external/test-subjects
 
 # these contain BYOND stdlib stuff

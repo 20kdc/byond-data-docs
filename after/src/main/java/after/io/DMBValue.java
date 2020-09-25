@@ -50,4 +50,21 @@ public final class DMBValue {
 	public float getFloatValue() {
 		return Float.intBitsToFloat(value);
 	}
+
+	@Override
+	public int hashCode() {
+		return (type * 0x100) + value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DMBValue))
+			return false;
+		DMBValue dv = (DMBValue) obj;
+		if (dv.type != type)
+			return false;
+		if (dv.value != value)
+			return false;
+		return true;
+	}
 }
