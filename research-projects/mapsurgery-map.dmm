@@ -2,12 +2,14 @@
 "b" = (/turf/grey_tile,/area)
 "c" = (/turf/black_tile,/area)
 "d" = (/turf/grey_tile { text = "> " ; interesting = 1 },/area)
+"e" = (/mob/reversi/white,/turf/grey_tile,/area)
+"f" = (/mob/reversi/black,/turf/grey_tile,/area)
 (1, 1, 1) = {"
 aaaaaaac
 abbbbbbc
 abbaaabc
-ababbbbc
-ababbbbc
+abaefbbc
+abafebbc
 abbaaabc
 abbbbbdc
 cccccccc

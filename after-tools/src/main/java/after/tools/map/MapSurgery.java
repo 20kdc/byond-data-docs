@@ -8,6 +8,7 @@ import after.DMBMapping;
 import after.io.DMB;
 import after.io.DMBEntryBasedSubblock;
 import after.io.DMBInstanceTable;
+import after.io.DMBMapAdditionalData;
 import after.io.DMBValue;
 
 public class MapSurgery {
@@ -69,8 +70,14 @@ public class MapSurgery {
 			}
 		}
 		dmbG.mapAdditionalData.entries.clear();
-		System.out.println("NYI: map-additional-data");
-		// done!
+		for (DMBMapAdditionalData.Entry ent : dmbM.mapAdditionalData.entries) {
+			DMBMapAdditionalData.Entry oh = new DMBMapAdditionalData.Entry();
+			oh.offset = ent.offset;
+			Integer mapped = mapping.mapValue(DMBValue.INSTANCE_TYPEPATH, oh.instance);
+			if (mapped != null)
+				oh.instance = mapped;
+			dmbG.mapAdditionalData.entries.add(ent);
+		}
 		dmbG.fixStrings();
 	}
 

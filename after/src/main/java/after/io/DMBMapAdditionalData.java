@@ -23,7 +23,7 @@ public class DMBMapAdditionalData extends DMBObjectEntryBasedSubblock<DMBMapAddi
 		// Offset from last entry
 		public short offset;
 		// Nullable InstanceID
-		public int instance;
+		public int instance = DMBObjectEntryBasedSubblock.OBJ_NULL;
 		
 		@Override
 		public void read(DMBReadContext rc) {
