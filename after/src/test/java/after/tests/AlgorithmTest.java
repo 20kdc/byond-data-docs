@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+import after.algorithms.CYCSUB;
 import after.algorithms.NQCRC;
 import after.algorithms.RUNSUB;
 import after.algorithms.XORJump9;
@@ -46,6 +47,27 @@ public class AlgorithmTest {
 
 		// Encrypt again and compare to the original
 		RUNSUB.encrypt(data, 0, data.length, key);
+		for (int i = 0; i < data.length; i++)
+			assert data[i] == dataCopy[i];
+	}
+	
+	@Test
+	public void testCYCSUB() {
+		byte[] data = new byte[] {0x01, 0x02, 0x03, 0x04, 0x05};
+		byte[] key = new byte[] {0x10, 0x20, 0x1F};
+		byte[] dataCopy = new byte[data.length];
+		System.arraycopy(data, 0, dataCopy, 0, data.length);
+
+		// Encrypt
+		CYCSUB.encrypt(data, 0, data.length, key, 0, key.length);
+		assert data[0] == 17; // 0x01
+		assert data[1] == 35; // 0x03
+		assert data[2] == 37; // 0x06
+		assert data[3] == 26; // 0x0A
+		assert data[4] == 47; // 0x0F
+
+		// Decrypt again and compare to the original
+		CYCSUB.decrypt(data, 0, data.length, key, 0, key.length);
 		for (int i = 0; i < data.length; i++)
 			assert data[i] == dataCopy[i];
 	}

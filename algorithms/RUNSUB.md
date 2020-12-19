@@ -13,3 +13,5 @@ The checksum is updated after each byte. Again, it's a checksum of the unencrypt
 
 It writes the checksum byte unencrypted at the end of the message.
 
+Since encryption is addition, decryption is just subtraction.
+
