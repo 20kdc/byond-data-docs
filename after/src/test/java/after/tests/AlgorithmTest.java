@@ -60,11 +60,6 @@ public class AlgorithmTest {
 
 		// Encrypt
 		CYCSUB.encrypt(data, 0, data.length, key, 0, key.length);
-		assert data[0] == 17; // 0x01
-		assert data[1] == 35; // 0x03
-		assert data[2] == 37; // 0x06
-		assert data[3] == 26; // 0x0A
-		assert data[4] == 47; // 0x0F
 
 		// Decrypt again and compare to the original
 		CYCSUB.decrypt(data, 0, data.length, key, 0, key.length);

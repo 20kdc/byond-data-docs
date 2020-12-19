@@ -11,7 +11,7 @@ public class CYCSUB {
 	public static void decrypt(byte[] data, int offset, int length, byte[] key, int keyOffset, int keyLength) {
 		byte checksum = 0;
 		int keyIndex = 0;
-		for (int i = 0; i < length; i++) {
+		for (int i = length - 1; i >= 0; i--) {
 			byte roundKey = (byte) (checksum + key[keyOffset + keyIndex]);
 			// decryption: apply checksum after round key (to get decrypted value)
 			data[i + offset] -= roundKey;
@@ -26,7 +26,7 @@ public class CYCSUB {
 	public static void encrypt(byte[] data, int offset, int length, byte[] key, int keyOffset, int keyLength) {
 		byte checksum = 0;
 		int keyIndex = 0;
-		for (int i = 0; i < length; i++) {
+		for (int i = length - 1; i >= 0; i--) {
 			byte roundKey = (byte) (checksum + key[keyOffset + keyIndex]);
 			// encryption: apply checksum before round key (to get decrypted value)
 			checksum += data[i + offset];
