@@ -1,6 +1,6 @@
 # CYCSUB
 
-The CYCSUB encryption algorithm operates on buffers of data at a time.
+The CYCSUB encryption algorithm ("ServerEncrypt"/"ServerDecrypt") operates on buffers of data at a time.
 
 It has a key of some amount of bytes. If the key is zero-length, the encryption algorithm is completely deactivated (is effectively NOP).
 
