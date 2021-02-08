@@ -57,33 +57,7 @@ Finally, it ends with `# END DMI`.
 
 ## Old DMI Binary Format
 
-This is yet another special-snowflake format that's basically just a fancy way of embedding 8-bit indexed BMPs.
+Lummox Jr describes the old DMI binary format here: http://www.byond.com/forum/post/189170#comment1077677
 
-...HEY! RPG Maker 2k3 users, I see you putting your pencils down! Start taking notes again, there ARE MAJOR DIFFERENCES!
-
-When loaded in DreamMaker, this shows up as a "DMI (v3)" file.
-
-Anyway.
-
-Little-endian as usual.
-
-1. Magic number (`04 44 4D 49`, or `\x04DMI`)
-2. Uint8 unk
-3. Uint16 paletteEntries
-4. Array of paletteEntries \* 3 Uint8s colours (each 3 byte group is a colour, and C0C0C0, which is also first, may be the mask colour)
-5. Uint16 stateCount
-
-For each state:
-
-1. Uint16 unk
-2. Uint16 unk
-3. Uint16 frames (?)
-4. Uint16 unk
-5. Uint8 unk
-6. Zero-terminated string name
-7. An unknown amount of data - this presumably involves compression or bit-packing somehow
-
-I'm not certain on further details, but the compression and/or bit-packing is extremely likely, as the size of the files doesn't make sense otherwise.
-
-There also appears to be a footer of at least 6 bytes (at least, those were the ones in common).
+The information will not be copied here unless something happens to the original.
 

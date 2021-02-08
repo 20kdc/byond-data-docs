@@ -30,3 +30,5 @@ This was useful to understand BYOND packet framing, not covering encryption
 Stephen001: Partial documentation of some format version (right now unknown but >= 307 < 494) at https://github.com/Stephen001/Lego
 
 The Red Book (Super Saiyan X, LordAndrew, Kaiochao, DarkCampainger et al.): Informed me of the existence of modified types.
+
+ZeWaka: Informed me of the existence of Lummox JR's information on the DMI format (at http://www.byond.com/forum/post/189170#comment1077677 )
