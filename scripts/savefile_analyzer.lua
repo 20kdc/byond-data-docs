@@ -15,7 +15,8 @@ while true do
 	else
 		print("data entry")
 	end
-	io.write(" unk:")
+	io.write(" valid:")
+	local valid = entryHead:byte(5) == 1
 	hex(entryHead:byte(5))
 	print()
 	-- do we really need to check all 32-bits for an examination tool? yes? *fine*
@@ -30,7 +31,7 @@ while true do
 	end
 	print()
 
-	if not isHeader then
+	if valid and not isHeader then
 		-- data entry, try to decode
 		local key = 0x53
 		io.write("  key: ")
