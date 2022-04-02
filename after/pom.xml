@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>t20kdc.bda</groupId>
+	<artifactId>after</artifactId>
+	<version>0.666-SNAPSHOT</version> <!-- NEVER CHANGE THIS. This entire set of libraries is unstable and SHOULD NOT be system-packed. -->
+
+	<name>after</name>
+	<description>Library for reading and writing BYOND DMB files. DO NOT SYSTEM-PACKAGE - ALWAYS INCLUDE IN APPLICATION JAR.</description>
+
+	<parent>
+		<groupId>t20kdc.bda</groupId>
+		<artifactId>bda-parent-project</artifactId>
+		<version>0.666-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
+

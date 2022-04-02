@@ -16,6 +16,7 @@ public class Main {
 		new Tool("mapsurgery", " GAME-DMB MAP-DMB OUTPUT", "Transplants a map from one DMB into another.", MapSurgeryMain.class),
 		new Tool("proxy", "", "Launches a BYOND protocol proxy on localhost:5100 which proxies to localhost:5101. Decrypts messages.", NetWorkbenchMain.class),
 		new Tool("broken-webadapter", " PORT", "DOESN'T WORK PROPERLY, attempts to get the webclient to do something", WebAdapterMain.class),
+		new Tool("check", " DMB", "Checks that reading a DMB file works.", CheckMain.class),
 		new Tool("exit", "", "Exits.", QuitMain.class)
 	};
 	
@@ -56,7 +57,7 @@ public class Main {
 			if (args[0].equals(t.name)) {
 				String[] remainingArgs = new String[args.length - 1];
 				System.arraycopy(args, 1, remainingArgs, 0, remainingArgs.length);
-				t.main.getMethod("main", String[].class).invoke(null, new Object[] {args});
+				t.main.getMethod("main", String[].class).invoke(null, new Object[] {remainingArgs});
 				return;
 			}
 		}

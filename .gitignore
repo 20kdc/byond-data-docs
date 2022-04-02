@@ -9,7 +9,9 @@
 .gradle
 
 after/build
+after/target
 after-tools/build
+after-tools/target
 after/external/test-subjects
 
 # these contain BYOND stdlib stuff

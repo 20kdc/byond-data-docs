@@ -24,8 +24,10 @@ public class EquivalenceTest {
 	@Parameterized.Parameters(name = "{0}")
 	public static Collection<Object[]> data() {
 		final LinkedList<Object[]> tests = new LinkedList<Object[]>();
-		for (File f : new File("external/test-subjects").listFiles())
-			tests.add(new Object[] {f.toPath()});
+		File[] files = new File("external/test-subjects").listFiles();
+		if (files != null)
+			for (File f : files)
+				tests.add(new Object[] {f.toPath()});
 		return tests;
 	}
 

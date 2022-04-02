@@ -35,7 +35,7 @@ public class MapSurgeryMain {
 		fos.close();
 	}
 
-	private static DMB get(String args) throws Exception {
+	public static DMB get(String args) throws Exception {
 		byte[] gameDMBData = Files.readAllBytes(new File(args).toPath());
 		DMB d = new DMB();
 		d.read(new DMBReadContext(gameDMBData, true));
