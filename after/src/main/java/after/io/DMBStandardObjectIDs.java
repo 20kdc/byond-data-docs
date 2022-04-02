@@ -1,5 +1,6 @@
 package after.io;
 
+import after.annotations.CacheFileID;
 import after.annotations.ClassID;
 import after.annotations.ListOfProcID;
 import after.annotations.MobTypeID;
@@ -8,6 +9,8 @@ import after.annotations.StringID;
 import after.io.framework.DMBReadContext;
 import after.io.framework.DMBWriteContext;
 import static after.io.DMBObjectEntryBasedSubblock.OBJ_NULL;
+
+import aedium.ElementMarkers;
 
 public class DMBStandardObjectIDs {
 	@MobTypeID // Nullable
@@ -21,7 +24,8 @@ public class DMBStandardObjectIDs {
 	public int procs = OBJ_NULL;
 	@ProcID // Nullable
 	public int globalVariableInitializer = OBJ_NULL;
-	public int idBAC = OBJ_NULL;
+	@StringID // Nullable
+	public int domain = OBJ_NULL;
 	@StringID
 	public int name = OBJ_NULL;
 	// GEN < 368 (yes, under)
@@ -34,17 +38,19 @@ public class DMBStandardObjectIDs {
 	@ClassID
 	public int image = OBJ_NULL;
 	// --	
-	public byte unkB;
-	public byte unkC = 1;
+	public byte clientLazyEye;
+	public byte clientDir = 1;
 	// GEN >= 415
-	public short unkD;
+	public short clientControlFreak;
 	// --
 	public byte unkE;
 	// GEN >= 230
-	public int idC = OBJ_NULL;
+	@StringID // Nullable
+	public int clientScript = OBJ_NULL;
 	// --
 	// GEN >= 507
-	public int[] idEvenMore = new int[0];
+	@ElementMarkers(CacheFileID.class)
+	public int[] clientScriptFiles = new int[0];
 	// GEN < 507 (yes, under)
 	public int idX = OBJ_NULL;
 	// GEN >= 232
@@ -59,10 +65,14 @@ public class DMBStandardObjectIDs {
 	// GEN >= 266
 	@StringID // Nullable
 	public int serverName = OBJ_NULL;
-	public int[] unkBG = new int[2];
+	public int hubNumber;
+	public int gameVersion;
 	// GEN >= 272
-	public short unkG = 30;
-	public int[] idAY = new int[] {OBJ_NULL, OBJ_NULL};
+	public short cacheLifespan = 30;
+	@StringID // Nullable
+	public int clientCommandText;
+	@StringID // Nullable
+	public int clientCommandPrompt;
 	// GEN >= 276
 	@StringID // Nullable
 	public int hub = OBJ_NULL;
@@ -70,12 +80,13 @@ public class DMBStandardObjectIDs {
 	@StringID // Nullable (?) but really should be "default"
 	public int channel = OBJ_NULL;
 	// GEN >= 360
-	public int idAZB = OBJ_NULL;
+	@CacheFileID // Nullable
+	public int skin = OBJ_NULL;
 	
 	// LHS >= 455
 	public short iconSizeX = 32;
 	public short iconSizeY = 32;
-	public short unkZ = (short) 32768;
+	public short mapFormat = (short) 32768;
 	
 	public void read(DMBReadContext rc) {
 		mob = rc.id();
@@ -83,7 +94,7 @@ public class DMBStandardObjectIDs {
 		area = rc.id();
 		procs = rc.id();
 		globalVariableInitializer = rc.id();
-		idBAC = rc.id();
+		domain = rc.id();
 		name = rc.id();
 		if (rc.vGEN < 368)
 			idOld1 = rc.id();
@@ -91,16 +102,16 @@ public class DMBStandardObjectIDs {
 		client = rc.id();
 		if (rc.vGEN >= 308)
 			image = rc.id();
-		unkB = rc.io.get();
-		unkC = rc.io.get();
+		clientLazyEye = rc.io.get();
+		clientDir = rc.io.get();
 		if (rc.vGEN >= 415)
-			unkD = rc.io.getShort();
+			clientControlFreak = rc.io.getShort();
 		unkE = rc.io.get();
 		if (rc.vGEN >= 230)
-			idC = rc.id();
+			clientScript = rc.id();
 		if (rc.vGEN >= 507) {
-			idEvenMore = new int[rc.io.getShort() & 0xFFFF];
-			rc.ids(idEvenMore);
+			clientScriptFiles = new int[rc.io.getShort() & 0xFFFF];
+			rc.ids(clientScriptFiles);
 		}
 		if (rc.vGEN < 507) {
 			idX = rc.id();
@@ -115,27 +126,29 @@ public class DMBStandardObjectIDs {
 			hubPasswordHashed = rc.id();
 		if (rc.vGEN >= 266) {
 			serverName = rc.id();
-			rc.ints(unkBG);
+			hubNumber = rc.io.getInt();
+			gameVersion = rc.io.getInt();
 		}
 		if (rc.vGEN >= 272) {
-			unkG = rc.io.getShort();
-			rc.ids(idAY);
+			cacheLifespan = rc.io.getShort();
+			clientCommandText = rc.id();
+			clientCommandPrompt = rc.id();
 		}
 		if (rc.vGEN >= 276)
 			hub = rc.id();
 		if (rc.vGEN >= 305)
 			channel = rc.id();
 		if (rc.vGEN >= 360)
-			idAZB = rc.id();
+			skin = rc.id();
 		
 		if (rc.vLHS >= 455) {
 			iconSizeX = rc.io.getShort();
 			iconSizeY = rc.io.getShort();
-			unkZ = rc.io.getShort();
+			mapFormat = rc.io.getShort();
 		} else {
 			iconSizeX = 32;
 			iconSizeY = 32;
-			unkZ = (short) 32768;
+			mapFormat = (short) 32768;
 		}
 	}
 	
@@ -145,7 +158,7 @@ public class DMBStandardObjectIDs {
 		wc.id(area);
 		wc.id(procs);
 		wc.id(globalVariableInitializer);
-		wc.id(idBAC);
+		wc.id(domain);
 		wc.id(name);
 		if (wc.vGEN < 368)
 			wc.id(idOld1);
@@ -153,16 +166,16 @@ public class DMBStandardObjectIDs {
 		wc.id(client);
 		if (wc.vGEN >= 308)
 			wc.id(image);
-		wc.i8(unkB);
-		wc.i8(unkC);
+		wc.i8(clientLazyEye);
+		wc.i8(clientDir);
 		if (wc.vGEN >= 415)
-			wc.i16(unkD);
+			wc.i16(clientControlFreak);
 		wc.i8(unkE);
 		if (wc.vGEN >= 230)
-			wc.id(idC);
+			wc.id(clientScript);
 		if (wc.vGEN >= 507) {
-			wc.i16(idEvenMore.length);
-			wc.ids(idEvenMore);
+			wc.i16(clientScriptFiles.length);
+			wc.ids(clientScriptFiles);
 		}
 		if (wc.vGEN < 507)
 			wc.id(idX);
@@ -176,22 +189,24 @@ public class DMBStandardObjectIDs {
 			wc.id(hubPasswordHashed);
 		if (wc.vGEN >= 266) {
 			wc.id(serverName);
-			wc.ints(unkBG);
+			wc.i32(hubNumber);
+			wc.i32(gameVersion);
 		}
 		if (wc.vGEN >= 266) {
-			wc.i16(unkG);
-			wc.ids(idAY);
+			wc.i16(cacheLifespan);
+			wc.id(clientCommandText);
+			wc.id(clientCommandPrompt);
 		}
 		if (wc.vGEN >= 276)
 			wc.id(hub);
 		if (wc.vGEN >= 305)
 			wc.id(channel);
 		if (wc.vGEN >= 360)
-			wc.id(idAZB);
+			wc.id(skin);
 		if (wc.vLHS >= 455) {
 			wc.i16(iconSizeX);
 			wc.i16(iconSizeY);
-			wc.i16(unkZ);
+			wc.i16(mapFormat);
 		}
 	}
 }

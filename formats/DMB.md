@@ -1,5 +1,9 @@
 # INCOMPLETE BUT STRUCTURALLY COMPLETE UP TO V512
 
+Addendum to this disclaimer - I haven't yet found indications of anything going particularly *wrong* when using this information on V514.
+
+But that may simply be due to a lack of feature use (i.e. RHS version differences).
+
 ## Taxonomy
 
 An "ObjectID" is a generic object ID which there isn't details for yet.
@@ -405,7 +409,7 @@ It is reasonable to assume that null instances are used to pad out long empty re
 3. Nullable ClassID area
 4. Nullable ListID of ProcID procs (this contains procs attached to /world)
 5. Nullable ProcID globalVariableInitializer (this contains global variable initializers)
-6. Nullable ObjectID unk
+6. Nullable StringID domain (this is `world.domain`, a mysterious, seemingly undocumented property - thanks to Willox for finding this)
 7. StringID name
 
 If GEN Version < 368 (YES, UNDER) {
@@ -414,7 +418,7 @@ If GEN Version < 368 (YES, UNDER) {
 
 }
 
-1. Uint32 tickTimeMillis (This is related to server tick time and is likely in milliseconds. Seems to default to 100.)
+1. Uint32 tickTimeMillis (this is `world.tick_lag`, multiplied by 100 - essentially, the time per tick measured in integer milliseconds.)
 2. ClassID client
 
 If GEN Version >= 308 {
@@ -423,12 +427,12 @@ If GEN Version >= 308 {
 
 }
 
-1. Uint8 unk
-2. Uint8 unk (Seems to default to 1, but isn't necessary)
+1. Uint8 clientLazyEye (this is `client.lazy_eye`, used for camera control - thanks to Willox for finding this)
+2. Uint8 clientDir (this is `client.dir` - defaults to 1 (NORTH). - thanks to Willox for finding this)
 
 If GEN Version >= 415 {
 
-1. Uint16 unk
+1. Uint16 clientControlFreak (this is `client.control_freak`, used to restrict skins and macros - thanks to Willox for finding this)
 
 }
 
@@ -436,14 +440,14 @@ If GEN Version >= 415 {
 
 If GEN Version >= 230 {
 
-1. ObjectID unk
+1. Nullable StringID clientScript (this is `client.script` *specifically* as a string - thanks to Willox for finding this)
 
 }
 
 If GEN Version >= 507 {
 
-1. Uint16 evenMoreCount
-2. Array of evenMoreCount ObjectIDs evenMore
+1. Uint16 clientScriptCacheFileCount
+2. Array of clientScriptCacheFileCount CacheFileIDs clientScriptCacheFiles (this is every `client.script` file - thanks to Willox for finding this)
 
 }
 
@@ -480,20 +484,22 @@ If GEN Version >= 341 {
 If GEN Version >= 266 {
 
 1. Nullable StringID serverName
-2. Array of 2 Uint32s unk
+2. Uint32 hubNumber (This is where `world.hub` goes when a number is provided - thanks to Willox for finding this)
+3. Uint32 gameVersion (`world.version`, not to be confused with the BYOND version - thanks to Willox for finding this)
 
 }
 
 If GEN Version >= 272 {
 
-1. Uint16 unk (best set to 30)
-2. Array of 2 Nullable ObjectIDs unk
+1. Uint16 cacheLifespan (Best set to 30. `world.cache_lifespan`, in days - thanks to Willox for finding this)
+2. Nullable StringID clientCommandText (`client.command_text` - thanks to Willox for finding this)
+3. Nullable StringID clientCommandPrompt (`client.command_prompt` (undocumented?) - thanks to Willox for finding this)
 
 }
 
 If GEN Version >= 276 {
 
-1. Nullable StringID hub (this is the `user.game` hub name)
+1. Nullable StringID hub (this is the `user.game` hub name, i.e. `world.hub`)
 
 }
 
@@ -505,7 +511,7 @@ If GEN Version >= 305 {
 
 If GEN Version >= 360 {
 
-1. ObjectID unk
+1. Nullable CacheFileID skin (DMI and friends - thanks to Willox for finding this)
 
 }
 
@@ -513,7 +519,7 @@ If LHS Version >= 455 {
 
 1. Uint16 iconSizeX (default 32)
 2. Uint16 iconSizeY (default 32)
-3. Uint16 unk (default 32768)
+3. Uint16 mapFormat (default 32768 - thanks to Willox for finding this)
 
 }
 

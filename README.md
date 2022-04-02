@@ -27,6 +27,8 @@ Tomeno: important parts of string decryption and protocol decryption
 BobOfDoom, NGGJamie, Crispy: Documented the BYOND Topic protocol at https://github.com/NGGJamie/byond-topics
 This was useful to understand BYOND packet framing, not covering encryption
 
+Willox: Documented some of the previously unknown properties at https://github.com/willox/dmasm/blob/dmb/src/dmb/loader.rs
+
 Stephen001: Partial documentation of some format version (right now unknown but >= 307 < 494) at https://github.com/Stephen001/Lego
 
 The Red Book (Super Saiyan X, LordAndrew, Kaiochao, DarkCampainger et al.): Informed me of the existence of modified types.

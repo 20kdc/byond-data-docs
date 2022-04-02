@@ -1,2 +1,0 @@
-include ":after"
-project(":after").projectDir = file("../after")

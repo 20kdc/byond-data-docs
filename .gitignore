@@ -18,6 +18,7 @@ after/external/test-subjects
 research-projects/*.dmb
 research-projects/*.lk
 research-projects/*.int
+research-projects/*.rsc
 # clutters the repo
 research-projects/*.sav
 # not sure what to do with these, and it's not like they're hard to get

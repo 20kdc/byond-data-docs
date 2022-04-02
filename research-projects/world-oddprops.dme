@@ -1,0 +1,14 @@
+// World odd properties
+
+/world
+	domain = "this is an example of string" // Thanks to Willox
+	tick_lag = 0.5
+	hub = 1337
+
+/client
+	script = 'a.dms'
+	script = 'b.dms'
+	script = "<C/>"
+	command_text = "Outstandingly pokable."
+	command_prompt = "Outstandingly undocumented."
+
