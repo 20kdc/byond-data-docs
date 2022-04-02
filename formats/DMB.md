@@ -147,16 +147,16 @@ format version shenanigans.
 
 For RHS Versions >= 494, additionally {
 
-1. ObjectID unk
-2. Uint16 unk (note: my pet theory is, this involves either step or icon size)
-3. Uint16 unk (same)
+1. Nullable StringID maptext (thanks to Willox for finding this)
+2. Uint16 maptextWidth (thanks to Willox for finding this)
+3. Uint16 maptextHeight (thanks to Willox for finding this)
 
 }
 
 For RHS Versions >= 508, additionally {
 
-1. Uint16 unk
-2. Uint16 unk
+1. Uint16 maptextX (thanks to Willox for finding this)
+2. Uint16 maptextY (thanks to Willox for finding this)
 
 }
 
@@ -176,15 +176,15 @@ For GEN Versions >= 267, additionally {
 
 For RHS Versions >= 500, additionally {
 
-1. Uint8 hasFloats, but really a boolean
-2. If hasFloats, Array of 6 Float32s
+1. Uint8 hasTransform, but really a boolean
+2. If hasColourMatrix, Array of 6 Float32s (Affine transform (TODO: Details?) - thanks to Willox for finding this)
 
 }
 
 For RHS Versions >= 509, additionally {
 
-1. Uint8 hasEvenMoreFloats, really a boolean
-2. If hasEvenMoreFloats, Array of 20 Float32s
+1. Uint8 hasColourMatrix, really a boolean
+2. If hasColourMatrix, Array of 20 Float32s (Colour matrix (TODO: Details?) - thanks to Willox for finding this)
 
 }
 

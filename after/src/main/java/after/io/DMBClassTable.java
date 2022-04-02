@@ -51,14 +51,15 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 		
 		// >= 494
 		
-		public int idH;
-		public short unkB;
-		public short unkC;
+		@StringID // Nullable
+		public int maptext;
+		public short maptextWidth;
+		public short maptextHeight;
 		
 		// >= 508
 		
-		public short unkD;
-		public short unkE;
+		public short maptextX;
+		public short maptextY;
 		
 		// --
 		
@@ -83,13 +84,13 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 		
 		// >= 500
 		
-		public byte hasFloats;
-		public float[] floats = new float[6];
+		public byte hasTransform;
+		public float[] transform = new float[6];
 		
 		// >= 509
 		
-		public byte hasEvenMoreFloats;
-		public float[] evenMoreFloats = new float[20];
+		public byte hasColourMatrix;
+		public float[] colourMatrix = new float[20];
 		
 		// >= 306
 		
@@ -118,14 +119,14 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 			text = rc.id();
 			
 			if (rc.vRHS >= 494) {
-				idH = rc.id();
-				unkB = rc.io.getShort();
-				unkC = rc.io.getShort();
+				maptext = rc.id();
+				maptextWidth = rc.io.getShort();
+				maptextHeight = rc.io.getShort();
 			}
 			
 			if (rc.vRHS >= 508) {
-				unkD = rc.io.getShort();
-				unkE = rc.io.getShort();
+				maptextX = rc.io.getShort();
+				maptextY = rc.io.getShort();
 			}
 			
 			suffix = rc.id();
@@ -144,15 +145,15 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 				layer = rc.io.getFloat();
 			
 			if (rc.vRHS >= 500) {
-				hasFloats = rc.io.get();
-				if (hasFloats != 0)
-					rc.floats(floats);
+				hasTransform = rc.io.get();
+				if (hasTransform != 0)
+					rc.floats(transform);
 			}
 			
 			if (rc.vRHS >= 509) {
-				hasEvenMoreFloats = rc.io.get();
-				if (hasEvenMoreFloats != 0)
-					rc.floats(evenMoreFloats);
+				hasColourMatrix = rc.io.get();
+				if (hasColourMatrix != 0)
+					rc.floats(colourMatrix);
 			}
 			
 			if (rc.vGEN >= 306)
@@ -181,14 +182,14 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 			wc.id(text);
 			
 			if (wc.vRHS >= 494) {
-				wc.id(idH);
-				wc.i16(unkB);
-				wc.i16(unkC);
+				wc.id(maptext);
+				wc.i16(maptextWidth);
+				wc.i16(maptextHeight);
 			}
 			
 			if (wc.vRHS >= 508) {
-				wc.i16(unkD);
-				wc.i16(unkE);
+				wc.i16(maptextX);
+				wc.i16(maptextY);
 			}
 			
 			wc.id(suffix);
@@ -206,15 +207,15 @@ public class DMBClassTable extends DMBObjectEntryBasedSubblock<DMBClassTable.Ent
 				wc.i32(Float.floatToIntBits(layer));
 			
 			if (wc.vRHS >= 500) {
-				wc.i8(hasFloats);
-				if (hasFloats != 0)
-					wc.floats(floats);
+				wc.i8(hasTransform);
+				if (hasTransform != 0)
+					wc.floats(transform);
 			}
 			
 			if (wc.vRHS >= 509) {
-				wc.i8(hasEvenMoreFloats);
-				if (hasEvenMoreFloats != 0)
-					wc.floats(evenMoreFloats);
+				wc.i8(hasColourMatrix);
+				if (hasColourMatrix != 0)
+					wc.floats(colourMatrix);
 			}
 			
 			if (wc.vGEN >= 306)
