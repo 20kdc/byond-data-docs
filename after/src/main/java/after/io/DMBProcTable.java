@@ -21,14 +21,15 @@ public class DMBProcTable extends DMBObjectEntryBasedSubblock<DMBProcTable.Entry
 		// --
 		@StringID // Nullable
 		public int name = OBJ_NULL;
-		public int idBAA = OBJ_NULL;
+		@StringID // Nullable
+		public int desc = OBJ_NULL;
 		@StringID // Nullable
 		public int verbCategory = OBJ_NULL;
-		public byte unkA = -1;
-		public byte unkB;
-		public byte unkC;
-		public int unkCx;
-		public byte unkCy;
+		public byte verbSrcParam = -1;
+		public byte verbSrcKind;
+		public byte flags;
+		public int flagsExx;
+		public byte flagsExy;
 		// ListID (list containing DM bytecode)
 		@ListID
 		public int code = OBJ_NULL; // fill these with NULL so that the 0 doesn't get used by mistake
@@ -42,14 +43,14 @@ public class DMBProcTable extends DMBObjectEntryBasedSubblock<DMBProcTable.Entry
 			if (rc.vGEN >= 224 || rc.largeObjectIDs)
 				path = rc.id();
 			name = rc.id();
-			idBAA = rc.id();
+			desc = rc.id();
 			verbCategory = rc.id();
-			unkA = rc.io.get();
-			unkB = rc.io.get();
-			unkC = rc.io.get();
-			if (unkC < 0) {
-				unkCx = rc.io.getInt();
-				unkCy = rc.io.get();
+			verbSrcParam = rc.io.get();
+			verbSrcKind = rc.io.get();
+			flags = rc.io.get();
+			if (flags < 0) {
+				flagsExx = rc.io.getInt();
+				flagsExy = rc.io.get();
 			}
 			code = rc.id();
 			locals = rc.id();
@@ -61,14 +62,14 @@ public class DMBProcTable extends DMBObjectEntryBasedSubblock<DMBProcTable.Entry
 			if (wc.vGEN >= 224 || wc.largeObjectIDs)
 				wc.id(path);
 			wc.id(name);
-			wc.id(idBAA);
+			wc.id(desc);
 			wc.id(verbCategory);
-			wc.i8(unkA);
-			wc.i8(unkB);
-			wc.i8(unkC);
-			if (unkC < 0) {
-				wc.i32(unkCx);
-				wc.i8(unkCy);
+			wc.i8(verbSrcParam);
+			wc.i8(verbSrcKind);
+			wc.i8(flags);
+			if (flags < 0) {
+				wc.i32(flagsExx);
+				wc.i8(flagsExy);
 			}
 			wc.id(code);
 			wc.id(locals);

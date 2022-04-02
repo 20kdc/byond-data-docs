@@ -202,7 +202,7 @@ public class DMBMapping {
 		newProc.args = emptyListTgt;
 		newProc.code = dmbTgt.lists.add(newCode);
 		newProc.locals = emptyListTgt;
-		newProc.unkC = iV.unkC;
+		newProc.flags = iV.flags;
 		return dmbTgt.procs.add(newProc);
 	}
 

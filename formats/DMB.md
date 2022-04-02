@@ -329,15 +329,36 @@ For GEN Versions >= 224 OR if large object IDs are on {
 }
 
 1. Nullable StringID name (This is the display name for verbs, but *it is also used for inheritance*.)
-2. Nullable ObjectID unk
+2. Nullable StringID desc (The description of the verb - thanks to Willox for finding this)
 3. Nullable StringID verbCategory (NOTE: Verbs with a null category don't show up in the menu.)
-4. Uint8 unk (usually 0xFF)
-5. Uint8 unk (usually 0)
-6. Uint8 x (Seems to be flags - setting to 0 causes the verb menu to appear, while setting to 5 causes it to disappear.)
-7. If x has the high bit set, Uint32 unk, Uint8 unk.
+4. Uint8 verbSrcParam (usually 0xFF - thanks to Willox for finding this)
+5. Uint8 verbSrcKind (usually 0 - thanks to Willox for finding this, see below)
+6. Uint8 flags (See below)
+7. If flags has the high bit set, Uint32 unk, Uint8 unk.
 8. ListID code (See [Bytecode](./DMB.Bytecode.md) for further information)
 9. ListID of VarID locals (note that this isn't nullable)
 10. ListID args (note that this isn't nullable) (it's also complicated - VarIDs are involved, but also other stuff)
+
+```
+verbSrcKind meanings (thanks to Willox for these!):
+0x01: in view
+0x02: in oview
+0x03: usr.loc
+0x05: in range
+0x08: in usr
+0x20: = usr
+
+flags:
+
+Thanks to Willox for these:
+ 0x01: hidden
+ 0x02: src_equal
+ 0x04: wait_for
+ 0x20: no_category
+ 0x40: yes_category
+
+0x80: Has extended flags
+```
 
 ## Sub-Block 6 (The Var Table)
 
